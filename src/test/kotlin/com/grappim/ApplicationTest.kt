@@ -7,7 +7,6 @@ import io.ktor.response.*
 import io.ktor.request.*
 import kotlin.test.*
 import io.ktor.server.testing.*
-import com.grappim.plugins.*
 
 class ApplicationTest {
 }

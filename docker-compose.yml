@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  api:
+    ports:
+      - "5432:5432"
+    restart: always
+    image: postgres
+    volumes:
+      - "cashier-api/var/lib/postgresql/data"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "lalka49"
+      POSTGRES_DB: "cashier-api"
+
+volumes:
+  cashier-api:

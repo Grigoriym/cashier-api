@@ -1,6 +1,7 @@
 package com.grappim.config
 
 import com.grappim.util.AuthenticationException
+import com.grappim.util.RegisterUserIncorrectFieldsException
 import com.grappim.util.UserDoesNotExists
 import com.grappim.util.UserExists
 import io.ktor.application.*
@@ -20,5 +21,12 @@ fun StatusPages.Configuration.statusPages() {
     }
     exception<UserDoesNotExists> {
         call.respond(HttpStatusCode.NotFound)
+    }
+
+    exception<RegisterUserIncorrectFieldsException.BlankFieldsException> {cause->
+        call.respond(
+            status = HttpStatusCode.Conflict,
+            message = cause.exceptionMessage
+        )
     }
 }

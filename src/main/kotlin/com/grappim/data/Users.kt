@@ -8,7 +8,11 @@ import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
 import java.util.*
 
-object Users : UUIDTable() {
+private const val usersTableName = "users_table"
+
+object Users : UUIDTable(
+    name = usersTableName
+) {
 
     val email: Column<String> = varchar(
         name = "email",
@@ -39,6 +43,7 @@ class UserEntity(
     fun toUser(): User = User(
         email = email,
         username = username,
-        password = password
+        password = password,
+        id = id.value.toString()
     )
 }

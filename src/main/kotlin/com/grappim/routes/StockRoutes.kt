@@ -1,12 +1,10 @@
 package com.grappim.routes
 
 import com.grappim.models.Stock
-import com.grappim.models.StockToCreate
 import com.grappim.service.StockService
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
-import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import org.kodein.di.instance
@@ -17,11 +15,11 @@ fun Route.stockRouting() {
 
     val stockService by closestDI().instance<StockService>()
 
-    route("stock") {
+    route("/stock") {
         authenticate {
             get {
                 val allStocks = stockService.getAllStocks()
-                if (allStocks.isEmpty()) {
+                if (allStocks.isNotEmpty()) {
                     call.respond(allStocks)
                 } else {
                     call.respondText(
@@ -31,7 +29,7 @@ fun Route.stockRouting() {
                 }
             }
 
-            get("{id}") {
+            get("/{id}") {
                 val id = call.parameters["id"] ?: return@get call.respondText(
                     text = "Missing or malformed id",
                     status = HttpStatusCode.BadRequest
@@ -47,14 +45,14 @@ fun Route.stockRouting() {
                 }
             }
 
-            post {
-                val stockRequest = call.receive<StockToCreate>()
-                stockService.addStock(stockRequest)
-                call.respondText(
-                    text = "Stock stored correctly",
-                    status = HttpStatusCode.Accepted
-                )
-            }
+//            post {
+//                val stockRequest = call.receive<StockToCreate>()
+//                stockService.addStock(stockRequest)
+//                call.respondText(
+//                    text = "Stock stored correctly",
+//                    status = HttpStatusCode.Accepted
+//                )
+//            }
 
             delete("/{id}") {
                 val stockId = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)

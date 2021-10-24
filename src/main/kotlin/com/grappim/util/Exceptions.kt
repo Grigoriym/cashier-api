@@ -1,7 +1,15 @@
 package com.grappim.util
 
-class UserExists() : RuntimeException()
+class UserExists : RuntimeException()
 
-class UserDoesNotExists() : RuntimeException()
+sealed class RegisterUserIncorrectFieldsException(
+    open val exceptionMessage: String
+) : RuntimeException() {
+    data class BlankFieldsException(
+        override val exceptionMessage: String
+    ) : RegisterUserIncorrectFieldsException(exceptionMessage)
+}
 
-class AuthenticationException() : RuntimeException()
+class UserDoesNotExists : RuntimeException()
+
+class AuthenticationException : RuntimeException()

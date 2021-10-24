@@ -16,13 +16,13 @@ class CashBoxService {
         CashBoxEntity.all().map(CashBoxEntity::toCashBox)
     }
 
-    fun addCashBox(cashBoxToAdd: CashBoxToAdd) = transaction {
-        CashBoxEntity.new {
-            this.merchantId = cashBoxToAdd.merchantId
-            this.name = cashBoxToAdd.name
-            this.stockId = cashBoxToAdd.stockId
-        }
-    }
+//    fun addCashBox(cashBoxToAdd: CashBoxToAdd) = transaction {
+//        CashBoxEntity.new {
+//            this.merchantId = cashBoxToAdd.merchantId
+//            this.name = cashBoxToAdd.name
+//            this.stockId = cashBoxToAdd.stockId
+//        }
+//    }
 
     fun updateCashBox(cashBox: CashBox) = transaction {
 

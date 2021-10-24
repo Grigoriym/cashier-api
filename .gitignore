@@ -3,10 +3,8 @@
 /.gradle
 /out
 
-.certs
-
-docker-compose.yml
+/certs
 
 local.properties
 
-/resources/
+/src/main/resources/

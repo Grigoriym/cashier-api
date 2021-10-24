@@ -1,23 +1,20 @@
 package com.grappim.routes
 
 import com.grappim.authentication.jwt.JwtController
+import com.grappim.authentication.jwt.getId
+import com.grappim.models.DeleteUser
 import com.grappim.models.LoginUser
 import com.grappim.models.RegisterUser
 import com.grappim.models.UpdateUser
 import com.grappim.service.AuthService
-import com.grappim.util.AuthenticationException
 import io.ktor.application.*
 import io.ktor.auth.*
-import io.ktor.auth.jwt.*
 import io.ktor.http.*
-import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import io.ktor.util.pipeline.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import java.io.File
 
 fun Route.authRouting() {
 
@@ -38,23 +35,36 @@ fun Route.authRouting() {
         post("/login") {
             val loginUser = call.receive<LoginUser>()
             val user = authService.loginAndGetUser(loginUser)
-            val token = jwtController.generateToken(loginUser)
+            val token = jwtController.getTokenForRespond(user)
 
-            call.respond(hashMapOf("token" to token))
+            call.respond(token)
         }
 
         authenticate {
             get {
-                val email = getEmail()
-                val user = authService.getUserByEmail(email)
+                val id = getId()
+                val user = authService.getUserById(id)
                 call.respond(user)
+            }
+
+            put {
+                val updateUser = call.receive<UpdateUser>()
+                val id = getId()
+                val user = authService.updateUser(
+                    userId = id,
+                    updateUser = updateUser
+                )
+                call.respond(user)
+            }
+
+            delete("/{id}") {
+                val deleteUserId = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
+                authService.deleteUserById(deleteUserId)
+                call.respondText(
+                    text = "User deleted",
+                    status = HttpStatusCode.OK
+                )
             }
         }
     }
 }
-
-private fun PipelineContext<*, ApplicationCall>.getEmail(): String =
-    call.principal<JWTPrincipal>()
-        ?.payload
-        ?.getClaim("email")
-        ?.asString() ?: throw IllegalArgumentException("lol")

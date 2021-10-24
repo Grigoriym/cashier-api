@@ -6,7 +6,6 @@ import io.ktor.application.*
 import io.ktor.config.*
 import org.kodein.di.*
 
-const val databaseQualifier = "database"
 const val jwtQualifier = "jwt"
 
 const val hikariConfigQualifier = "qualifier.hikari-config"

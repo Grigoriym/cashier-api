@@ -17,11 +17,11 @@ fun Route.cashBoxRouting() {
 
     val cashBoxService by closestDI().instance<CashBoxService>()
 
-    route("cashbox") {
+    route("/cashbox") {
         authenticate {
             get {
                 val allCashBoxes = cashBoxService.getAllCashBoxes()
-                if (allCashBoxes.isEmpty()) {
+                if (allCashBoxes.isNotEmpty()) {
                     call.respond(allCashBoxes)
                 } else {
                     call.respondText(
@@ -31,7 +31,7 @@ fun Route.cashBoxRouting() {
                 }
             }
 
-            get("{id}") {
+            get("/{id}") {
                 val id = call.parameters["id"] ?: return@get call.respondText(
                     text = "Missing or malformed id",
                     status = HttpStatusCode.BadRequest
@@ -47,14 +47,14 @@ fun Route.cashBoxRouting() {
                 }
             }
 
-            post {
-                val cashBoxRequest = call.receive<CashBoxToAdd>()
-                cashBoxService.addCashBox(cashBoxRequest)
-                call.respondText(
-                    text = "CashBox stored correctly",
-                    status = HttpStatusCode.Accepted
-                )
-            }
+//            post {
+//                val cashBoxRequest = call.receive<CashBoxToAdd>()
+//                cashBoxService.addCashBox(cashBoxRequest)
+//                call.respondText(
+//                    text = "CashBox stored correctly",
+//                    status = HttpStatusCode.Accepted
+//                )
+//            }
 
             delete("/{id}") {
                 val cashBoxId = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)

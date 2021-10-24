@@ -4,13 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Stock(
-    val stockId: String,
+    val id: String,
     val merchantId: String,
-    val stockName: String
+    val name: String
 )
 
 @Serializable
 data class StockToCreate(
     val merchantId: String,
-    val stockName: String
+    val name: String
 )

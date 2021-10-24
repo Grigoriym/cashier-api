@@ -6,13 +6,13 @@ import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.ReferenceOption
 import java.util.*
 
 private const val cashBoxesTableName = "cashboxes_table"
 
 object CashBoxes : UUIDTable(
     name = cashBoxesTableName,
-    columnName = "cashBoxId"
 ) {
 
     val name: Column<String> = varchar(
@@ -20,16 +20,15 @@ object CashBoxes : UUIDTable(
         length = 50
     )
 
-    val merchantId: Column<String> = varchar(
-        name = "merchantId",
-        length = 50
-    )
+    val merchantId: Column<UUID> = (uuid(name = "merchantId").references(
+        ref = Users.id,
+        onDelete = ReferenceOption.CASCADE
+    )).uniqueIndex()
 
-    val stockId: Column<String> =
-        varchar(
-            name = "stockId",
-            length = 50
-        )
+    val stockId: Column<UUID> = (uuid(name = "stockId").references(
+        ref = Stocks.id,
+        onDelete = ReferenceOption.CASCADE
+    )).uniqueIndex()
 
 }
 
@@ -45,7 +44,7 @@ class CashBoxEntity(
     fun toCashBox(): CashBox = CashBox(
         name = name,
         cashBoxId = id.value.toString(),
-        merchantId = merchantId,
-        stockId = stockId
+        merchantId = merchantId.toString(),
+        stockId = stockId.toString()
     )
 }
