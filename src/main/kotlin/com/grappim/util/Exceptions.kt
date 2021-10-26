@@ -13,3 +13,5 @@ sealed class RegisterUserIncorrectFieldsException(
 class UserDoesNotExists : RuntimeException()
 
 class AuthenticationException : RuntimeException()
+
+object ProductNotFound : RuntimeException()

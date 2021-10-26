@@ -3,8 +3,6 @@ package com.grappim.authentication.jwt
 import com.auth0.jwk.JwkProvider
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.auth0.jwt.interfaces.Payload
-import com.grappim.models.LoginUser
 import com.grappim.models.User
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -36,9 +34,13 @@ class JwtController(
             .sign(Algorithm.RSA256(publicKey as RSAPublicKey, privateKey as RSAPrivateKey))
     }
 
-    fun getTokenForRespond(user:User):HashMap<String,String> {
+    fun getTokenForRespond(user: User): HashMap<String, String> {
         val token = generateToken(user)
         return hashMapOf("token" to token)
+    }
+
+    fun getTokenForRespondAsString(user: User): String {
+        return generateToken(user)
     }
 
 }

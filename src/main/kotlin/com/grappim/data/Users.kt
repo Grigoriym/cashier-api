@@ -14,8 +14,8 @@ object Users : UUIDTable(
     name = usersTableName
 ) {
 
-    val email: Column<String> = varchar(
-        name = "email",
+    val phone: Column<String> = varchar(
+        name = "phone",
         length = 255
     ).uniqueIndex()
 
@@ -36,14 +36,14 @@ class UserEntity(
 ) : UUIDEntity(id) {
     companion object : UUIDEntityClass<UserEntity>(Users)
 
-    var email by Users.email
+    var phone by Users.phone
     var username by Users.username
     var password by Users.password
 
     fun toUser(): User = User(
-        email = email,
-        username = username,
-        password = password,
-        id = id.value.toString()
+        phone = this.phone,
+        username = this.username,
+        password = this.password,
+        id = this.id.value.toString()
     )
 }

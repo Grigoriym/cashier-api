@@ -3,8 +3,6 @@ package com.grappim.service
 import com.grappim.data.StockEntity
 import com.grappim.data.Stocks
 import com.grappim.models.Stock
-import com.grappim.models.StockToCreate
-import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -28,5 +26,11 @@ class StockService {
 
     fun deleteStock(stockId: String) = transaction {
         StockEntity[UUID.fromString(stockId)].delete()
+    }
+
+    fun getStocksByMerchantId(merchantId: String): List<Stock> = transaction {
+        StockEntity.find {
+            Stocks.merchantId eq UUID.fromString(merchantId)
+        }.map { it.toStock() }
     }
 }

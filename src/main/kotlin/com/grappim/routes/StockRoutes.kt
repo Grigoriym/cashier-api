@@ -15,7 +15,7 @@ fun Route.stockRouting() {
 
     val stockService by closestDI().instance<StockService>()
 
-    route("/stock") {
+    route("/stocks") {
         authenticate {
             get {
                 val allStocks = stockService.getAllStocks()
@@ -24,6 +24,22 @@ fun Route.stockRouting() {
                 } else {
                     call.respondText(
                         text = "No stocks found",
+                        status = HttpStatusCode.NotFound
+                    )
+                }
+            }
+
+            get("/list/{merchantId}") {
+                val merchantId = call.parameters["id"] ?: return@get call.respondText(
+                    text = "Missing or malformed merchantId",
+                    status = HttpStatusCode.BadRequest
+                )
+                val stocks = stockService.getStocksByMerchantId(merchantId)
+                if (stocks.isNotEmpty()) {
+                    call.respond(stocks)
+                } else {
+                    call.respondText(
+                        text = "No stocks for merchantId: $merchantId found",
                         status = HttpStatusCode.NotFound
                     )
                 }

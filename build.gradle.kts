@@ -44,6 +44,7 @@ dependencies {
     implementation(exposed("-core"))
     implementation(exposed("-dao"))
     implementation(exposed("-jdbc"))
+    implementation(exposed("-java-time"))
 
     implementation("ch.qos.logback:logback-classic:$logback")
     implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodein")

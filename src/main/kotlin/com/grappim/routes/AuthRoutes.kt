@@ -2,10 +2,7 @@ package com.grappim.routes
 
 import com.grappim.authentication.jwt.JwtController
 import com.grappim.authentication.jwt.getId
-import com.grappim.models.DeleteUser
-import com.grappim.models.LoginUser
-import com.grappim.models.RegisterUser
-import com.grappim.models.UpdateUser
+import com.grappim.models.*
 import com.grappim.service.AuthService
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -35,9 +32,15 @@ fun Route.authRouting() {
         post("/login") {
             val loginUser = call.receive<LoginUser>()
             val user = authService.loginAndGetUser(loginUser)
-            val token = jwtController.getTokenForRespond(user)
+            val token = jwtController.getTokenForRespondAsString(user)
 
-            call.respond(token)
+            call.respond(
+                LoginUserResponse(
+                    token = token,
+                    merchantId = user.id,
+                    merchantName = user.username
+                )
+            )
         }
 
         authenticate {

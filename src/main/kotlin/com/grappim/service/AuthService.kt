@@ -1,6 +1,9 @@
 package com.grappim.service
 
-import com.grappim.data.*
+import com.grappim.data.CashBoxEntity
+import com.grappim.data.StockEntity
+import com.grappim.data.UserEntity
+import com.grappim.data.Users
 import com.grappim.models.LoginUser
 import com.grappim.models.RegisterUser
 import com.grappim.models.UpdateUser
@@ -19,50 +22,25 @@ class AuthService {
     fun register(registerUser: RegisterUser): User = transaction {
         val userInDatabase = UserEntity.find {
             (Users.username eq registerUser.user.username) or
-                    (Users.email eq registerUser.user.username)
+                    (Users.phone eq registerUser.user.username)
         }.firstOrNull()
 
         if (userInDatabase != null) throw UserExists()
 
-        if (registerUser.user.username.isBlank() ||
-            registerUser.user.email.isBlank() ||
-            registerUser.user.password.isBlank()
-        ) {
-            val isUsernameBlank = registerUser.user.username.isBlank()
-            val isEmailBlank = registerUser.user.email.isBlank()
-            val isPasswordBlank = registerUser.user.password.isBlank()
-
-            val emptyFields = StringBuilder("Empty fields are: ")
-                .append(
-                    if (isUsernameBlank) {
-                        "username, "
-                    } else {
-                        ""
-                    }
-                ).append(
-                    if (isEmailBlank) {
-                        "email, "
-                    } else {
-                        ""
-                    }
-                ).append(
-                    if (isPasswordBlank) {
-                        "password"
-                    } else {
-                        ""
-                    }
-                )
-            throw RegisterUserIncorrectFieldsException.BlankFieldsException(
-                emptyFields.toString()
-            )
-        }
+        checkUserFields(registerUser)
 
         val newUser = UserEntity.new {
             username = registerUser.user.username
-            email = registerUser.user.email
+            phone = registerUser.user.phone
             password = registerUser.user.password
         }
 
+        createAdditionalData(newUser)
+
+        newUser.toUser()
+    }
+
+    private fun createAdditionalData(newUser: UserEntity) {
         val stock = StockEntity.new {
             merchantId = newUser.id.value
             stockName = "${newUser.username} store"
@@ -73,13 +51,32 @@ class AuthService {
             merchantId = newUser.id.value
             stockId = stock.id.value
         }
+    }
 
-        newUser.toUser()
+    private fun checkUserFields(registerUser: RegisterUser) {
+        if (registerUser.user.username.isBlank() ||
+            registerUser.user.phone.isBlank() ||
+            registerUser.user.password.isBlank()
+        ) {
+            val isUsernameBlank = registerUser.user.username.isBlank()
+            val isPhoneBlank = registerUser.user.phone.isBlank()
+            val isPasswordBlank = registerUser.user.password.isBlank()
+
+            val blankFieldsList = mutableListOf<String>()
+            if (isUsernameBlank) blankFieldsList.add("username")
+            if (isPhoneBlank) blankFieldsList.add("phone")
+            if (isPasswordBlank) blankFieldsList.add("password")
+
+            val emptyFields = blankFieldsList.joinToString()
+            throw RegisterUserIncorrectFieldsException.BlankFieldsException(
+                emptyFields
+            )
+        }
     }
 
     fun loginAndGetUser(loginUser: LoginUser): User = transaction {
         UserEntity.find {
-            (Users.email eq loginUser.user.email) and
+            (Users.phone eq loginUser.user.phone) and
                     (Users.password eq loginUser.user.password)
         }.firstOrNull()?.toUser() ?: throw UserDoesNotExists()
     }
@@ -98,21 +95,13 @@ class AuthService {
         getUser(id).toUser()
     }
 
-    fun getUserByEmail(
-        email: String
-    ): User = transaction {
-        UserEntity.find {
-            Users.email eq email
-        }.firstOrNull()?.toUser() ?: throw UserDoesNotExists()
-    }
-
     fun updateUser(
         userId: String,
         updateUser: UpdateUser
     ): User = transaction {
         val user = getUser(userId)
         user.apply {
-            email = updateUser.user.email
+            phone = updateUser.user.phone
             password = updateUser.user.password
             username = updateUser.user.username
         }.toUser()

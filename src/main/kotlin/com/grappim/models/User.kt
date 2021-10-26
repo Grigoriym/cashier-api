@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class User(
-    val email: String,
+    val phone: String,
     val username: String,
     val password: String,
     val id: String
@@ -14,7 +14,7 @@ data class User(
 data class RegisterUser(val user: User) {
     @Serializable
     data class User(
-        val email: String,
+        val phone: String,
         val username: String,
         val password: String
     )
@@ -24,16 +24,23 @@ data class RegisterUser(val user: User) {
 data class LoginUser(val user: User) {
     @Serializable
     data class User(
-        val email: String,
+        val phone: String,
         val password: String
     )
 }
 
 @Serializable
+data class LoginUserResponse(
+    val token: String,
+    val merchantId: String,
+    val merchantName: String
+)
+
+@Serializable
 data class UpdateUser(val user: User) {
     @Serializable
     data class User(
-        val email: String,
+        val phone: String,
         val username: String,
         val password: String
     )
