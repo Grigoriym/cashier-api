@@ -23,9 +23,11 @@ fun Route.authRouting() {
         post {
             val registerUser = call.receive<RegisterUser>()
             authService.register(registerUser)
-            call.respondText(
-                text = "User stored correctly",
-                status = HttpStatusCode.Accepted
+            call.respond(
+                RegisterUserResponse(
+                    phone = registerUser.phone,
+                    email = registerUser.email
+                )
             )
         }
 
@@ -38,7 +40,7 @@ fun Route.authRouting() {
                 LoginUserResponse(
                     token = token,
                     merchantId = user.id,
-                    merchantName = user.username
+                    merchantName = user.email
                 )
             )
         }

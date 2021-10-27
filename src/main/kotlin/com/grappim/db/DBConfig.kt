@@ -24,12 +24,12 @@ fun Application.initDB() {
 }
 
 private fun createTables() = transaction {
-    SchemaUtils.drop(
-        Stocks,
-        Users,
-        CashBoxes,
-        Products
-    )//todo wait for versions migrations
+//    SchemaUtils.drop(
+//        Stocks,
+//        Users,
+//        CashBoxes,
+//        Products
+//    )//todo wait for versions migrations
     SchemaUtils.create(
         Users,
         Stocks,

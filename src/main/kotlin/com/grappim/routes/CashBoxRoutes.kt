@@ -1,7 +1,7 @@
 package com.grappim.routes
 
 import com.grappim.models.CashBox
-import com.grappim.models.CashBoxToAdd
+import com.grappim.models.GetCashBoxesList
 import com.grappim.service.CashBoxService
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -19,8 +19,11 @@ fun Route.cashBoxRouting() {
 
     route("/cashbox") {
         authenticate {
-            get {
-                val allCashBoxes = cashBoxService.getAllCashBoxes()
+            post("/list") {
+                val body = call.receive<GetCashBoxesList>()
+                val allCashBoxes = cashBoxService.getCashBoxes(
+                    body
+                )
                 if (allCashBoxes.isNotEmpty()) {
                     call.respond(allCashBoxes)
                 } else {

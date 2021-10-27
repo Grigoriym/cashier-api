@@ -21,8 +21,8 @@ class AuthService {
 
     fun register(registerUser: RegisterUser): User = transaction {
         val userInDatabase = UserEntity.find {
-            (Users.username eq registerUser.user.username) or
-                    (Users.phone eq registerUser.user.username)
+            (Users.username eq registerUser.email) or
+                    (Users.phone eq registerUser.email)
         }.firstOrNull()
 
         if (userInDatabase != null) throw UserExists()
@@ -30,9 +30,9 @@ class AuthService {
         checkUserFields(registerUser)
 
         val newUser = UserEntity.new {
-            username = registerUser.user.username
-            phone = registerUser.user.phone
-            password = registerUser.user.password
+            username = registerUser.email
+            phone = registerUser.phone
+            password = registerUser.password
         }
 
         createAdditionalData(newUser)
@@ -54,13 +54,13 @@ class AuthService {
     }
 
     private fun checkUserFields(registerUser: RegisterUser) {
-        if (registerUser.user.username.isBlank() ||
-            registerUser.user.phone.isBlank() ||
-            registerUser.user.password.isBlank()
+        if (registerUser.email.isBlank() ||
+            registerUser.phone.isBlank() ||
+            registerUser.password.isBlank()
         ) {
-            val isUsernameBlank = registerUser.user.username.isBlank()
-            val isPhoneBlank = registerUser.user.phone.isBlank()
-            val isPasswordBlank = registerUser.user.password.isBlank()
+            val isUsernameBlank = registerUser.email.isBlank()
+            val isPhoneBlank = registerUser.phone.isBlank()
+            val isPasswordBlank = registerUser.password.isBlank()
 
             val blankFieldsList = mutableListOf<String>()
             if (isUsernameBlank) blankFieldsList.add("username")
@@ -76,8 +76,8 @@ class AuthService {
 
     fun loginAndGetUser(loginUser: LoginUser): User = transaction {
         UserEntity.find {
-            (Users.phone eq loginUser.user.phone) and
-                    (Users.password eq loginUser.user.password)
+            (Users.phone eq loginUser.phone) and
+                    (Users.password eq loginUser.password)
         }.firstOrNull()?.toUser() ?: throw UserDoesNotExists()
     }
 
@@ -103,7 +103,7 @@ class AuthService {
         user.apply {
             phone = updateUser.user.phone
             password = updateUser.user.password
-            username = updateUser.user.username
+            username = updateUser.user.email
         }.toUser()
     }
 

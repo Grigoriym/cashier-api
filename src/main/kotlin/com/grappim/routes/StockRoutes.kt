@@ -30,7 +30,7 @@ fun Route.stockRouting() {
             }
 
             get("/list/{merchantId}") {
-                val merchantId = call.parameters["id"] ?: return@get call.respondText(
+                val merchantId = call.parameters["merchantId"] ?: return@get call.respondText(
                     text = "Missing or malformed merchantId",
                     status = HttpStatusCode.BadRequest
                 )

@@ -11,6 +11,12 @@ data class CashBox(
 )
 
 @Serializable
+data class GetCashBoxesList(
+    val merchantId: String,
+    val stockId: String
+)
+
+@Serializable
 data class CashBoxToAdd(
     val name: String,
     val merchantId: String,

@@ -42,7 +42,7 @@ class UserEntity(
 
     fun toUser(): User = User(
         phone = this.phone,
-        username = this.username,
+        email = this.username,
         password = this.password,
         id = this.id.value.toString()
     )
