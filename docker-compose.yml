@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 
 services:
   api:
@@ -6,11 +6,9 @@ services:
       - "5432:5432"
     restart: always
     image: postgres
-    volumes:
-      - "cashier-api/var/lib/postgresql/data"
     environment:
       POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "lalka49"
+      POSTGRES_PASSWORD: "lalkA49F"
       POSTGRES_DB: "cashier-api"
 
 volumes:
