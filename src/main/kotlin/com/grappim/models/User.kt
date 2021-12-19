@@ -25,7 +25,7 @@ data class RegisterUserResponse(
 
 @Serializable
 data class LoginUser(
-    val phone: String,
+    val mobile: String,
     val password: String
 )
 

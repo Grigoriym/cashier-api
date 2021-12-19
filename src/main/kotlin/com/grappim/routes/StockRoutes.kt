@@ -1,6 +1,8 @@
 package com.grappim.routes
 
+import com.grappim.authentication.jwt.getMerchantId
 import com.grappim.models.Stock
+import com.grappim.models.StocksResponse
 import com.grappim.service.StockService
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -19,8 +21,9 @@ fun Route.stockRouting() {
         authenticate {
             get {
                 val allStocks = stockService.getAllStocks()
+                val response = StocksResponse(allStocks)
                 if (allStocks.isNotEmpty()) {
-                    call.respond(allStocks)
+                    call.respond(response)
                 } else {
                     call.respondText(
                         text = "No stocks found",
@@ -34,9 +37,11 @@ fun Route.stockRouting() {
                     text = "Missing or malformed merchantId",
                     status = HttpStatusCode.BadRequest
                 )
+                val userId = getMerchantId()
                 val stocks = stockService.getStocksByMerchantId(merchantId)
+                val response = StocksResponse(stocks)
                 if (stocks.isNotEmpty()) {
-                    call.respond(stocks)
+                    call.respond(response)
                 } else {
                     call.respondText(
                         text = "No stocks for merchantId: $merchantId found",

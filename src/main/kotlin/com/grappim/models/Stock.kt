@@ -10,6 +10,11 @@ data class Stock(
 )
 
 @Serializable
+data class StocksResponse(
+    val stocks: List<Stock>
+)
+
+@Serializable
 data class StockToCreate(
     val merchantId: String,
     val name: String

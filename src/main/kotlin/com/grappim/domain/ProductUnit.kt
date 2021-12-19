@@ -6,5 +6,16 @@ enum class ProductUnit(
     KG("kg"),
     METRE("m"),
     LITRE("l"),
-    PIECE("pc")
+    PIECE("pc");
+
+    companion object {
+        fun getUnitFromString(text: String): ProductUnit =
+            when (text) {
+                KG.unit -> KG
+                METRE.unit -> METRE
+                LITRE.unit -> LITRE
+                PIECE.unit -> PIECE
+                else -> error("incorrect product unit")
+            }
+    }
 }

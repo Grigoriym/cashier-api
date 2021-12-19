@@ -1,9 +1,6 @@
 package com.grappim.db
 
-import com.grappim.data.CashBoxes
-import com.grappim.data.Products
-import com.grappim.data.Stocks
-import com.grappim.data.Users
+import com.grappim.data.*
 import com.zaxxer.hikari.HikariDataSource
 import io.ktor.application.*
 import org.jetbrains.exposed.sql.Database
@@ -28,12 +25,14 @@ private fun createTables() = transaction {
 //        Stocks,
 //        Users,
 //        CashBoxes,
-//        Products
+//        Products,
+//        ProductCategories
 //    )//todo wait for versions migrations
     SchemaUtils.create(
         Users,
         Stocks,
         CashBoxes,
-        Products
+        Products,
+        ProductCategories
     )
 }

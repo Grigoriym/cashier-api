@@ -19,3 +19,7 @@ The REST API backed server for the [CashierApp](https://github.com/Grigoriym/Cas
 
 - bdconfig.properties is used to create connection to postgres db
 - jwks.json is used for JWT RSA256
+
+### Roadmap
+- Swagger
+- Architecture

@@ -3,8 +3,9 @@ package com.grappim.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Merchant(
+data class ProductCategory(
+    val id: Long,
+    val name: String,
     val merchantId: String,
-    val merchantName: String,
-    val mobile: String
+    val stockId: String
 )

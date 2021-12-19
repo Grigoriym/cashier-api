@@ -45,7 +45,7 @@ class JwtController(
 
 }
 
-fun PipelineContext<*, ApplicationCall>.getId(): String =
+fun PipelineContext<*, ApplicationCall>.getMerchantId(): String =
     call.principal<JWTPrincipal>()
         ?.payload
         ?.getClaim(CLAIM_ID)

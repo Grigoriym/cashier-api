@@ -63,9 +63,9 @@ class AuthService {
             val isPasswordBlank = registerUser.password.isBlank()
 
             val blankFieldsList = mutableListOf<String>()
-            if (isUsernameBlank) blankFieldsList.add("username")
-            if (isPhoneBlank) blankFieldsList.add("phone")
-            if (isPasswordBlank) blankFieldsList.add("password")
+            if (isUsernameBlank) blankFieldsList.add("username is empty")
+            if (isPhoneBlank) blankFieldsList.add("phone is empty")
+            if (isPasswordBlank) blankFieldsList.add("password is empty")
 
             val emptyFields = blankFieldsList.joinToString()
             throw RegisterUserIncorrectFieldsException.BlankFieldsException(
@@ -76,7 +76,7 @@ class AuthService {
 
     fun loginAndGetUser(loginUser: LoginUser): User = transaction {
         UserEntity.find {
-            (Users.phone eq loginUser.phone) and
+            (Users.phone eq loginUser.mobile) and
                     (Users.password eq loginUser.password)
         }.firstOrNull()?.toUser() ?: throw UserDoesNotExists()
     }

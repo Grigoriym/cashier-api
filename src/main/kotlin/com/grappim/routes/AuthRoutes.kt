@@ -1,7 +1,7 @@
 package com.grappim.routes
 
 import com.grappim.authentication.jwt.JwtController
-import com.grappim.authentication.jwt.getId
+import com.grappim.authentication.jwt.getMerchantId
 import com.grappim.models.*
 import com.grappim.service.AuthService
 import io.ktor.application.*
@@ -18,7 +18,7 @@ fun Route.authRouting() {
     val authService by closestDI().instance<AuthService>()
     val jwtController by closestDI().instance<JwtController>()
 
-    route("/user") {
+    route("/merch") {
 
         post {
             val registerUser = call.receive<RegisterUser>()
@@ -47,14 +47,14 @@ fun Route.authRouting() {
 
         authenticate {
             get {
-                val id = getId()
+                val id = getMerchantId()
                 val user = authService.getUserById(id)
                 call.respond(user)
             }
 
             put {
                 val updateUser = call.receive<UpdateUser>()
-                val id = getId()
+                val id = getMerchantId()
                 val user = authService.updateUser(
                     userId = id,
                     updateUser = updateUser

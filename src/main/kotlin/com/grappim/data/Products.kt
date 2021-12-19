@@ -68,6 +68,11 @@ object Products : LongIdTable(
     val updatedOn = datetime(
         name = "updatedOn"
     )
+
+    val categoryId: Column<Long> = (long(name = "categoryId").references(
+        ref = ProductCategories.id,
+        onDelete = ReferenceOption.SET_NULL
+    )).uniqueIndex()
 }
 
 class ProductEntity(
@@ -85,8 +90,10 @@ class ProductEntity(
     var sellingPrice by Products.sellingPrice
     var createdOn by Products.createdOn
     var updatedOn by Products.updatedOn
+    var categoryId by Products.categoryId
 
     fun toProduct(): Product = Product(
+        id = this.id.value,
         barcode = this.barcode,
         name = this.name,
         stockId = this.stockId.toString(),
@@ -96,6 +103,7 @@ class ProductEntity(
         purchasePrice = this.purchasePrice,
         sellingPrice = this.sellingPrice,
         createdOn = this.createdOn,
-        updatedOn = this.updatedOn
+        updatedOn = this.updatedOn,
+        categoryId = this.categoryId
     )
 }

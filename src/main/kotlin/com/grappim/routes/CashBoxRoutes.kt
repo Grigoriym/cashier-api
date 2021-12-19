@@ -1,6 +1,7 @@
 package com.grappim.routes
 
 import com.grappim.models.CashBox
+import com.grappim.models.CashBoxResponse
 import com.grappim.models.GetCashBoxesList
 import com.grappim.service.CashBoxService
 import io.ktor.application.*
@@ -24,8 +25,9 @@ fun Route.cashBoxRouting() {
                 val allCashBoxes = cashBoxService.getCashBoxes(
                     body
                 )
+                val response = CashBoxResponse(allCashBoxes)
                 if (allCashBoxes.isNotEmpty()) {
-                    call.respond(allCashBoxes)
+                    call.respond(response)
                 } else {
                     call.respondText(
                         text = "No cashboxes found",

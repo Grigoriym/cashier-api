@@ -23,7 +23,7 @@ fun Application.module(testing: Boolean = false) {
     install(ContentNegotiation) {
         json(Json {
             isLenient = true
-            prettyPrint = true
+            prettyPrint = false
             ignoreUnknownKeys = true
         })
     }
