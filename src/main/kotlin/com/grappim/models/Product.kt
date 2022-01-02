@@ -58,5 +58,5 @@ data class CreateProduct(
     val barcode: String,
     val createdOn: String,
     val updatedOn: String,
-    val categoryId: Int
+    val categoryId: Long
 )

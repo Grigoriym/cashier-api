@@ -1,17 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val ktor: String by project
-val kotlin: String by project
-val logback: String by project
-val exposed: String by project
-val kodein: String by project
-val hikari: String by project
-val postgreSql: String by project
-
 plugins {
     application
-    kotlin("jvm") version "1.5.31"
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("jvm") version Versions.kotlin
+    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 group = "com.grappim"
@@ -27,30 +19,28 @@ repositories {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "13"
     }
 }
 
 dependencies {
-    fun ktor(module: String = "", version: String = ktor) = "io.ktor:ktor$module:$version"
-    fun exposed(module: String = "", version: String = exposed) = "org.jetbrains.exposed:exposed$module:$version"
 
-    implementation(ktor("-server-core"))
-    implementation(ktor("-server-netty"))
-    implementation(ktor("-serialization"))
-    implementation(ktor("-auth"))
-    implementation(ktor("-auth-jwt"))
+    implementation(Deps.ktorServerCore())
+    implementation(Deps.ktorServerNetty())
+    implementation(Deps.ktorSerialization())
+    implementation(Deps.ktorAuth())
+    implementation(Deps.ktorAuthJwt())
 
-    implementation(exposed("-core"))
-    implementation(exposed("-dao"))
-    implementation(exposed("-jdbc"))
-    implementation(exposed("-java-time"))
+    implementation(Deps.exposedCore())
+    implementation(Deps.exposedDao())
+    implementation(Deps.exposedJdbc())
+    implementation(Deps.exposedJavaTime())
 
-    implementation("ch.qos.logback:logback-classic:$logback")
-    implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodein")
-    implementation("org.postgresql:postgresql:$postgreSql")
-    implementation("com.zaxxer:HikariCP:$hikari")
+    implementation(Deps.logback)
+    implementation(Deps.hikari)
+    implementation(Deps.postgreSql)
+    implementation(Deps.kodein)
 
-    testImplementation(ktor("-server-tests"))
-    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin")
+    testImplementation(Deps.ktorServerTests())
+    testImplementation(Deps.kotlinTest())
 }
