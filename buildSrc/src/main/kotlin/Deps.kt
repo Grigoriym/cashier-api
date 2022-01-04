@@ -14,7 +14,15 @@ object Deps {
   private fun kotlin(module: String = "", version: String = Versions.kotlin) =
     "org.jetbrains.kotlin:kotlin$module:$version"
 
+  private fun kotlinx(module: String = "", version: String = Versions.kotlin) =
+    "org.jetbrains.kotlinx:kotlinx$module:$version"
+
+  fun kotlinStdlib() = kotlin("-stdlib-jdk8")
   fun kotlinTest() = kotlin("-test")
+  fun kotlinSerialization() = kotlinx(
+    module = "-serialization-json",
+    version = Versions.kotlinSerialization
+  )
 
   fun ktorServerCore() = ktor("-server-core")
   fun ktorServerNetty() = ktor("-server-netty")

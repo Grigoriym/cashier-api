@@ -8,22 +8,22 @@ import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 
 fun Application.configureAuth() {
-    val jwkConfig by closestDI().instance<JwtConfig>()
-    val jwkProvider by closestDI().instance<JwkProvider>()
+  val jwkConfig by closestDI().instance<JwtConfig>()
+  val jwkProvider by closestDI().instance<JwkProvider>()
 
-    install(Authentication) {
-        jwt() {
-            realm = jwkConfig.realm
-            verifier(jwkProvider, jwkConfig.issuer) {
-                acceptLeeway(3)
-            }
-            validate { credential ->
-                if (credential.payload.getClaim("id").asString().isNotBlank()) {
-                    JWTPrincipal(credential.payload)
-                } else {
-                    null
-                }
-            }
+  install(Authentication) {
+    jwt {
+      realm = jwkConfig.realm
+      verifier(jwkProvider, jwkConfig.issuer) {
+        acceptLeeway(3)
+      }
+      validate { credential ->
+        if (credential.payload.getClaim("id").asString().isNotBlank()) {
+          JWTPrincipal(credential.payload)
+        } else {
+          null
         }
+      }
     }
+  }
 }

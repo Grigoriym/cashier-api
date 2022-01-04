@@ -18,6 +18,7 @@ private fun Routing.apiRoute() {
         cashBoxRouting()
         authRouting()
         productRouting()
+        productCategoryRouting()
     }
 }
 

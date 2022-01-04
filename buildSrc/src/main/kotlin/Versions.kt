@@ -6,4 +6,5 @@ object Versions {
   const val hikari = "5.0.0"
   const val kodein = "7.8.0"
   const val postgreSql = "42.2.24"
+  const val kotlinSerialization = "1.3.2"
 }

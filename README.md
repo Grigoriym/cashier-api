@@ -23,3 +23,4 @@ The REST API backed server for the [CashierApp](https://github.com/Grigoriym/Cas
 ### Roadmap
 - Swagger
 - Architecture
+- I need to learn kodein

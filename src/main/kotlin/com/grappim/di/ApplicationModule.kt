@@ -2,13 +2,13 @@ package com.grappim.di
 
 import com.grappim.authentication.jwt.JwtSpec
 import com.grappim.config.JwtConfig
+import com.grappim.utils.AppConfigs
 import io.ktor.application.*
 import io.ktor.config.*
 import org.kodein.di.*
 
 const val jwtQualifier = "jwt"
 
-const val hikariConfigQualifier = "qualifier.hikari-config"
 private const val dbconfig = "ktor.dbconfig"
 
 fun DI.MainBuilder.applicationModule(application: Application) {
@@ -20,7 +20,7 @@ fun DI.MainBuilder.applicationModule(application: Application) {
 private fun DI.MainBuilder.bindApplicationConfig(application: Application) {
     bind<ApplicationConfig>(jwtQualifier) with provider { application.environment.config.config(jwtQualifier) }
 
-    bind<String>(hikariConfigQualifier) with provider { application.environment.config.property(dbconfig).getString() }
+    bind<String>(AppConfigs.hikariConfigQualifier) with provider { application.environment.config.property(dbconfig).getString() }
 }
 
 private fun DI.MainBuilder.bindJwtConfig() {

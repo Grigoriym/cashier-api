@@ -1,5 +1,6 @@
 package com.grappim.di
 
+import com.grappim.db.di.databaseModule
 import io.ktor.application.*
 import org.kodein.di.ktor.di
 

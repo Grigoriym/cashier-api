@@ -2,8 +2,11 @@ package com.grappim.routes
 
 import com.grappim.authentication.jwt.JwtController
 import com.grappim.authentication.jwt.getMerchantId
-import com.grappim.models.*
-import com.grappim.service.AuthService
+import com.grappim.domain.service.AuthService
+import com.grappim.mappers.toLoginUser
+import com.grappim.mappers.toRegisterUser
+import com.grappim.mappers.toUpdateUser
+import com.grappim.model.*
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
@@ -15,61 +18,62 @@ import org.kodein.di.ktor.closestDI
 
 fun Route.authRouting() {
 
-    val authService by closestDI().instance<AuthService>()
-    val jwtController by closestDI().instance<JwtController>()
+  val authService by closestDI().instance<AuthService>()
+  val jwtController by closestDI().instance<JwtController>()
 
-    route("/merch") {
+  route("/merch") {
 
-        post {
-            val registerUser = call.receive<RegisterUser>()
-            authService.register(registerUser)
-            call.respond(
-                RegisterUserResponse(
-                    phone = registerUser.phone,
-                    email = registerUser.email
-                )
-            )
-        }
-
-        post("/login") {
-            val loginUser = call.receive<LoginUser>()
-            val user = authService.loginAndGetUser(loginUser)
-            val token = jwtController.getTokenForRespondAsString(user)
-
-            call.respond(
-                LoginUserResponse(
-                    token = token,
-                    merchantId = user.id,
-                    merchantName = user.email
-                )
-            )
-        }
-
-        authenticate {
-            get {
-                val id = getMerchantId()
-                val user = authService.getUserById(id)
-                call.respond(user)
-            }
-
-            put {
-                val updateUser = call.receive<UpdateUser>()
-                val id = getMerchantId()
-                val user = authService.updateUser(
-                    userId = id,
-                    updateUser = updateUser
-                )
-                call.respond(user)
-            }
-
-            delete("/{id}") {
-                val deleteUserId = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
-                authService.deleteUserById(deleteUserId)
-                call.respondText(
-                    text = "User deleted",
-                    status = HttpStatusCode.OK
-                )
-            }
-        }
+    post {
+      val registerUserDao = call.receive<RegisterUserDTO>()
+      authService.register(registerUserDao.toRegisterUser())
+      call.respond(
+        RegisterUserResponseDTO(
+          phone = registerUserDao.phone,
+          email = registerUserDao.email
+        )
+      )
     }
+
+    post("/login") {
+      val loginUserDao = call.receive<LoginUserDTO>()
+      val user = authService.loginAndGetUser(loginUserDao.toLoginUser())
+      val token = jwtController.getTokenForRespondAsString(user)
+
+      call.respond(
+        LoginUserResponseDTO(
+          token = token,
+          merchantId = user.id,
+          merchantName = user.email
+        )
+      )
+    }
+
+    authenticate {
+      get {
+        val id = getMerchantId()
+        val user = authService.getUserById(id)
+        call.respond(user)
+      }
+
+      put {
+        val updateUserDao = call.receive<UpdateUserDTO>()
+        val id = getMerchantId()
+        val user = authService.updateUser(
+          userId = id,
+          updateUser = updateUserDao.toUpdateUser()
+        )
+        call.respond(user)
+      }
+
+      delete("/{id}") {
+        val deleteUserId =
+          call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
+        authService.deleteUserById(deleteUserId)
+        call.respondText(
+          text = "User deleted",
+          status = HttpStatusCode.OK
+        )
+      }
+    }
+  }
 }
