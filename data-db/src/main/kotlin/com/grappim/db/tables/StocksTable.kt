@@ -5,10 +5,8 @@ import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption
 import java.util.*
 
-private const val stocksTableName = "stocks_table"
-
 object StocksTable : UUIDTable(
-  name = stocksTableName
+  name = "stocks_table"
 ) {
 
   val merchantId: Column<UUID> = (uuid(name = "merchantId").references(

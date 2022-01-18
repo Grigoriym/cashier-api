@@ -1,26 +1,20 @@
 package com.grappim.mappers
 
-import com.grappim.db.entities.CashBoxEntity
-import com.grappim.model.CashBoxDTO
+import com.grappim.data_service.model.cashbox.AddCashBoxDTO
+import com.grappim.data_service.model.cashbox.CashBoxDTO
+import com.grappim.data_service.model.cashbox.GetCashBoxesListDTO
+import com.grappim.domain.model.cashbox.AddCashBox
 import com.grappim.domain.model.cashbox.CashBox
 import com.grappim.domain.model.cashbox.GetCashBoxesList
-import com.grappim.model.GetCashBoxesListDTO
 
-fun CashBoxEntity.toCashBoxDTO(): CashBoxDTO = CashBoxDTO(
-  name = name,
-  cashBoxId = id.value.toString(),
-  merchantId = merchantId.toString(),
-  stockId = stockId.toString()
-)
-
-fun CashBox.toCashBoxDTO(): CashBoxDTO = CashBoxDTO(
+fun CashBox.toDTO(): CashBoxDTO = CashBoxDTO(
   name = this.name,
   cashBoxId = this.cashBoxId,
   merchantId = this.merchantId,
   stockId = this.stockId
 )
 
-fun List<CashBox>.toCashBoxListDTO(): List<CashBoxDTO> =
+fun List<CashBox>.toDTO(): List<CashBoxDTO> =
   this.map {
     CashBoxDTO(
       name = it.name,
@@ -30,8 +24,15 @@ fun List<CashBox>.toCashBoxListDTO(): List<CashBoxDTO> =
     )
   }
 
-fun GetCashBoxesListDTO.toGetCashBoxesList(): GetCashBoxesList =
+fun GetCashBoxesListDTO.toDomain(): GetCashBoxesList =
   GetCashBoxesList(
     merchantId = this.merchantId,
     stockId = this.stockId
+  )
+
+fun AddCashBoxDTO.toDomain(): AddCashBox =
+  AddCashBox(
+    name = name,
+    merchantId = merchantId,
+    stockId = stockId
   )

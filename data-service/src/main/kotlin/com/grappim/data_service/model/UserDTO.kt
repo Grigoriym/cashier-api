@@ -1,4 +1,4 @@
-package com.grappim.model
+package com.grappim.data_service.model
 
 import kotlinx.serialization.Serializable
 

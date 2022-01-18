@@ -8,10 +8,8 @@ import org.jetbrains.exposed.sql.javatime.datetime
 import java.math.BigDecimal
 import java.util.*
 
-private const val productsTableName = "products_table"
-
 object ProductsTable : LongIdTable(
-  name = productsTableName
+  name = "products_table"
 ) {
 
   val barcode: Column<String> = varchar(

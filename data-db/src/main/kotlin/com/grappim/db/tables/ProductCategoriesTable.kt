@@ -5,10 +5,8 @@ import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption
 import java.util.*
 
-private const val productCategoriesTableName = "product_category_table"
-
 object ProductCategoriesTable : LongIdTable(
-  name = productCategoriesTableName
+  name = "product_category_table"
 ) {
   val name: Column<String> = varchar(
     name = "name",

@@ -1,10 +1,6 @@
 package com.grappim.config
 
-import com.grappim.utils.AuthenticationException
-import com.grappim.utils.ProductNotFound
-import com.grappim.utils.RegisterUserIncorrectFieldsException
-import com.grappim.utils.UserDoesNotExists
-import com.grappim.utils.UserExists
+import com.grappim.utils.*
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -24,9 +20,29 @@ fun StatusPages.Configuration.statusPages() {
             )
         )
     }
-    exception<UserDoesNotExists> { cause ->
+    exception<UserDoesNotExist> { cause ->
         call.respond(
             status = HttpStatusCode.NotFound,
+            message = mapOf(
+                "statusCode" to cause.statusCode,
+                "message" to cause.message
+            )
+        )
+    }
+
+    exception<MerchantIdIsEmpty> { cause->
+        call.respond(
+            status = HttpStatusCode.Conflict,
+            message = mapOf(
+                "statusCode" to cause.statusCode,
+                "message" to cause.message
+            )
+        )
+    }
+
+    exception<StockIdIsEmpty> { cause->
+        call.respond(
+            status = HttpStatusCode.Conflict,
             message = mapOf(
                 "statusCode" to cause.statusCode,
                 "message" to cause.message

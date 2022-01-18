@@ -1,12 +1,12 @@
-package com.grappim.db.service
+package com.grappim.data_service.service
 
 import com.grappim.utils.RegisterUserIncorrectFieldsException
-import com.grappim.utils.UserDoesNotExists
+import com.grappim.utils.UserDoesNotExist
 import com.grappim.utils.UserExists
 import com.grappim.db.entities.CashBoxEntity
 import com.grappim.db.entities.StockEntity
 import com.grappim.db.entities.UserEntity
-import com.grappim.db.mappers.toUser
+import com.grappim.db.mappers.toDomain
 import com.grappim.db.tables.UsersTable
 import com.grappim.domain.model.user.LoginUser
 import com.grappim.domain.model.user.RegisterUser
@@ -39,7 +39,7 @@ class AuthServiceImpl : AuthService {
 
     createAdditionalData(newUser)
 
-    newUser.toUser()
+    newUser.toDomain()
   }
 
   private fun checkUserFields(registerUser: RegisterUser) {
@@ -82,7 +82,7 @@ class AuthServiceImpl : AuthService {
     UserEntity.find {
       (UsersTable.phone eq loginUser.mobile) and
           (UsersTable.password eq loginUser.password)
-    }.firstOrNull()?.toUser() ?: throw UserDoesNotExists()
+    }.firstOrNull()?.toDomain() ?: throw UserDoesNotExist()
   }
 
 
@@ -97,7 +97,7 @@ class AuthServiceImpl : AuthService {
   override fun getUserById(
     id: String
   ): User = transaction {
-    getUser(id).toUser()
+    getUser(id).toDomain()
   }
 
   override fun updateUser(
@@ -109,10 +109,10 @@ class AuthServiceImpl : AuthService {
       phone = updateUser.user.phone
       password = updateUser.user.password
       username = updateUser.user.email
-    }.toUser()
+    }.toDomain()
   }
 
   private fun getUser(id: String): UserEntity =
-    UserEntity.findById(UUID.fromString(id)) ?: throw UserDoesNotExists()
+    UserEntity.findById(UUID.fromString(id)) ?: throw UserDoesNotExist()
 
 }

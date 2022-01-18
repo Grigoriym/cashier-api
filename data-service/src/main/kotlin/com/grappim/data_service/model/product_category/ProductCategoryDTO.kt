@@ -1,4 +1,4 @@
-package com.grappim.model
+package com.grappim.data_service.model.product_category
 
 import kotlinx.serialization.Serializable
 
@@ -20,9 +20,4 @@ data class CreateProductCategoryDTO(
   val name: String,
   val merchantId: String,
   val stockId: String
-)
-
-@Serializable
-data class CreateProductCategoryResponseDTO(
-  val id: Long
 )

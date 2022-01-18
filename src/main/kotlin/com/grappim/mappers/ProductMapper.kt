@@ -1,9 +1,9 @@
 package com.grappim.mappers
 
+import com.grappim.data_service.model.CreateProductDTO
 import com.grappim.domain.model.product.CreateProduct
-import com.grappim.model.CreateProductDTO
 
-fun CreateProductDTO.toCreateProduct(): CreateProduct = CreateProduct(
+fun CreateProductDTO.toDomain(): CreateProduct = CreateProduct(
   name = this.name,
   stockId = this.stockId,
   merchantId = this.merchantId,

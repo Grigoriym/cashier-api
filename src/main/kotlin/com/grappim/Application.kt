@@ -15,28 +15,31 @@ import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
-fun Application.module(testing: Boolean = false) {
-    initDI()
-    initDB()
+fun Application.module() {
+  initDI()
+  initDB()
 
-    install(DefaultHeaders)
-    install(ContentNegotiation) {
-        json(Json {
-            isLenient = true
-            prettyPrint = false
-            ignoreUnknownKeys = true
-        })
-    }
-    install(CallLogging) {
-        level = Level.INFO
-    }
-    install(CORS) {
-        cors()
-    }
-    configureAuth()
-    install(StatusPages) {
-        statusPages()
-    }
+  install(DefaultHeaders)
+  install(ContentNegotiation) {
+    json(Json {
+      isLenient = true
+      prettyPrint = false
+      ignoreUnknownKeys = true
+    })
+  }
+  install(CallLogging) {
+    level = Level.INFO
+  }
+  install(CORS) {
+    cors()
+  }
+  configureAuth()
+  install(StatusPages) {
+    statusPages()
+  }
 
-    registerApiRoutes()
+  registerApiRoutes()
 }
+
+private fun getEnvironment(): String =
+  System.getenv()["ENVIRONMENT"] ?: "dev"

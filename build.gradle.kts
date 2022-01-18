@@ -26,6 +26,7 @@ tasks.withType<KotlinCompile> {
 dependencies {
 
   implementation(project(Modules.dataDb))
+  implementation(project(Modules.dataService))
   implementation(project(Modules.domain))
   implementation(project(Modules.utils))
 

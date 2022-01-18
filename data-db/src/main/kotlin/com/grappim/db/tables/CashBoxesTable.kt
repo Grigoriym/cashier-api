@@ -5,10 +5,8 @@ import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption
 import java.util.*
 
-private const val cashBoxesTableName = "cashboxes_table"
-
 object CashBoxesTable : UUIDTable(
-  name = cashBoxesTableName,
+  name = "cashboxes_table",
 ) {
 
   val name: Column<String> = varchar(

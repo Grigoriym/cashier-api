@@ -1,11 +1,10 @@
 package com.grappim.routes
 
 import com.grappim.authentication.jwt.getMerchantId
+import com.grappim.data_service.model.StockDTO
+import com.grappim.data_service.model.StocksResponseDTO
 import com.grappim.domain.service.StockService
-import com.grappim.mappers.toListStockDTO
-import com.grappim.mappers.toStockDTO
-import com.grappim.model.StockDTO
-import com.grappim.model.StocksResponseDTO
+import com.grappim.mappers.toDTO
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
@@ -23,7 +22,7 @@ fun Route.stockRouting() {
     authenticate {
       get {
         val allStocks = stockService.getAllStocks()
-        val response = StocksResponseDTO(allStocks.toListStockDTO())
+        val response = StocksResponseDTO(allStocks.toDTO())
         if (allStocks.isNotEmpty()) {
           call.respond(response)
         } else {
@@ -41,7 +40,7 @@ fun Route.stockRouting() {
         )
         val userId = getMerchantId()
         val stocks = stockService.getStocksByMerchantId(merchantId)
-        val response = StocksResponseDTO(stocks.toListStockDTO())
+        val response = StocksResponseDTO(stocks.toDTO())
         if (stocks.isNotEmpty()) {
           call.respond(response)
         } else {
@@ -59,7 +58,7 @@ fun Route.stockRouting() {
         )
         val stock: StockDTO? = stockService.getStockById(
           UUID.fromString(id)
-        )?.toStockDTO()
+        )?.toDTO()
         if (stock == null) {
           call.respondText(
             text = "No stock with id: $id",

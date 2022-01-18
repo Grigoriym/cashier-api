@@ -1,4 +1,4 @@
-package com.grappim.model
+package com.grappim.data_service.model.cashbox
 
 import kotlinx.serialization.Serializable
 
@@ -17,13 +17,6 @@ data class CashBoxResponseDTO(
 
 @Serializable
 data class GetCashBoxesListDTO(
-    val merchantId: String,
-    val stockId: String
-)
-
-@Serializable
-data class CashBoxToAddDTO(
-    val name: String,
     val merchantId: String,
     val stockId: String
 )

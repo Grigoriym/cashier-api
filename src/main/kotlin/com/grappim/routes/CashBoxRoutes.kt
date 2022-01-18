@@ -1,12 +1,12 @@
 package com.grappim.routes
 
+import com.grappim.data_service.model.cashbox.CashBoxDTO
+import com.grappim.data_service.model.cashbox.CashBoxResponseDTO
+import com.grappim.data_service.model.cashbox.AddCashBoxDTO
+import com.grappim.data_service.model.cashbox.GetCashBoxesListDTO
 import com.grappim.domain.service.CashBoxService
-import com.grappim.mappers.toCashBoxDTO
-import com.grappim.mappers.toCashBoxListDTO
-import com.grappim.mappers.toGetCashBoxesList
-import com.grappim.model.CashBoxDTO
-import com.grappim.model.CashBoxResponseDTO
-import com.grappim.model.GetCashBoxesListDTO
+import com.grappim.mappers.toDTO
+import com.grappim.mappers.toDomain
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
@@ -22,13 +22,14 @@ fun Route.cashBoxRouting() {
   val cashBoxService by closestDI().instance<CashBoxService>()
 
   route("/cashbox") {
+
     authenticate {
       post("/list") {
         val body = call.receive<GetCashBoxesListDTO>()
         val allCashBoxes = cashBoxService.getCashBoxes(
-          body.toGetCashBoxesList()
+          body.toDomain()
         )
-        val response = CashBoxResponseDTO(allCashBoxes.toCashBoxListDTO())
+        val response = CashBoxResponseDTO(allCashBoxes.toDTO())
         if (allCashBoxes.isNotEmpty()) {
           call.respond(response)
         } else {
@@ -46,7 +47,7 @@ fun Route.cashBoxRouting() {
         )
         val cashBox: CashBoxDTO? = cashBoxService
           .getCashBoxById(UUID.fromString(id))
-          ?.toCashBoxDTO()
+          ?.toDTO()
         if (cashBox == null) {
           call.respondText(
             text = "No cashBox with id: $id",
@@ -57,14 +58,14 @@ fun Route.cashBoxRouting() {
         }
       }
 
-//            post {
-//                val cashBoxRequest = call.receive<CashBoxToAdd>()
-//                cashBoxService.addCashBox(cashBoxRequest)
-//                call.respondText(
-//                    text = "CashBox stored correctly",
-//                    status = HttpStatusCode.Accepted
-//                )
-//            }
+      post {
+        val cashBoxRequest = call.receive<AddCashBoxDTO>()
+        val id = cashBoxService.createCashBox(cashBoxRequest.toDomain())
+        call.respondText(
+          text = "CashBox with id=$id stored correctly",
+          status = HttpStatusCode.Accepted
+        )
+      }
 
       delete("/{id}") {
         val cashBoxId =

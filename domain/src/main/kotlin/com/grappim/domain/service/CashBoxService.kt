@@ -1,5 +1,6 @@
 package com.grappim.domain.service
 
+import com.grappim.domain.model.cashbox.AddCashBox
 import com.grappim.domain.model.cashbox.CashBox
 import com.grappim.domain.model.cashbox.GetCashBoxesList
 import java.util.*
@@ -13,4 +14,7 @@ interface CashBoxService {
   ): List<CashBox>
 
   fun deleteCashBox(cashBoxId: String)
+
+  fun createCashBox(addCashBox: AddCashBox): String
+
 }

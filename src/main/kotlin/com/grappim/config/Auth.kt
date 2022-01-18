@@ -18,7 +18,7 @@ fun Application.configureAuth() {
         acceptLeeway(3)
       }
       validate { credential ->
-        if (credential.payload.getClaim("id").asString().isNotBlank()) {
+        if (credential.payload.getClaim("id").asString().isNotEmpty()) {
           JWTPrincipal(credential.payload)
         } else {
           null

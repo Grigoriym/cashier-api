@@ -1,4 +1,4 @@
-package com.grappim.serializers
+package com.grappim.utils.serializers
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

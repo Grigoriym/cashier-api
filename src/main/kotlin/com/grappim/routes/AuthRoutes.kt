@@ -2,11 +2,9 @@ package com.grappim.routes
 
 import com.grappim.authentication.jwt.JwtController
 import com.grappim.authentication.jwt.getMerchantId
+import com.grappim.data_service.model.*
 import com.grappim.domain.service.AuthService
-import com.grappim.mappers.toLoginUser
-import com.grappim.mappers.toRegisterUser
-import com.grappim.mappers.toUpdateUser
-import com.grappim.model.*
+import com.grappim.mappers.toDomain
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
@@ -25,7 +23,7 @@ fun Route.authRouting() {
 
     post {
       val registerUserDao = call.receive<RegisterUserDTO>()
-      authService.register(registerUserDao.toRegisterUser())
+      authService.register(registerUserDao.toDomain())
       call.respond(
         RegisterUserResponseDTO(
           phone = registerUserDao.phone,
@@ -36,7 +34,7 @@ fun Route.authRouting() {
 
     post("/login") {
       val loginUserDao = call.receive<LoginUserDTO>()
-      val user = authService.loginAndGetUser(loginUserDao.toLoginUser())
+      val user = authService.loginAndGetUser(loginUserDao.toDomain())
       val token = jwtController.getTokenForRespondAsString(user)
 
       call.respond(
@@ -56,11 +54,11 @@ fun Route.authRouting() {
       }
 
       put {
-        val updateUserDao = call.receive<UpdateUserDTO>()
+        val updateUserDTO = call.receive<UpdateUserDTO>()
         val id = getMerchantId()
         val user = authService.updateUser(
           userId = id,
-          updateUser = updateUserDao.toUpdateUser()
+          updateUser = updateUserDTO.toDomain()
         )
         call.respond(user)
       }

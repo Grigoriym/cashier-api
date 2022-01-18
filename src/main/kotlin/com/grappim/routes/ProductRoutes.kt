@@ -1,10 +1,10 @@
 package com.grappim.routes
 
 import com.grappim.authentication.jwt.getMerchantId
+import com.grappim.data_service.model.CreateProductRequestDTO
+import com.grappim.data_service.model.CreateProductResponseDTO
 import com.grappim.domain.service.ProductService
-import com.grappim.mappers.toCreateProduct
-import com.grappim.model.CreateProductRequestDTO
-import com.grappim.model.CreateProductResponseDTO
+import com.grappim.mappers.toDomain
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
@@ -19,12 +19,12 @@ fun Route.productRouting() {
   val productService by closestDI().instance<ProductService>()
 
   route("/product") {
-    authenticate {
 
+    authenticate {
       post {
         val request = call.receive<CreateProductRequestDTO>()
         val newProductId = productService.createProduct(
-          request.product.toCreateProduct()
+          request.product.toDomain()
         )
         call.respond(
           CreateProductResponseDTO(

@@ -1,29 +1,25 @@
-package com.grappim.db.service
+package com.grappim.data_service.service
 
 import com.grappim.db.entities.ProductEntity
-import com.grappim.db.mappers.toProduct
+import com.grappim.db.mappers.toDomain
 import com.grappim.db.tables.ProductsTable
 import com.grappim.domain.model.general.ProductUnit
 import com.grappim.domain.model.product.CreateProduct
 import com.grappim.domain.model.product.Product
 import com.grappim.domain.service.ProductService
+import com.grappim.utils.toUUID
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
-import java.util.*
 
 class ProductsServiceImpl : ProductService {
-
-//  fun getProductById(id: Long): ProductDTO = transaction {
-//    ProductEntity.findById(id)?.toProductDTO() ?: throw ProductNotFound
-//  }
 
   override fun getAllProductsByMerchantId(merchantId: String): List<Product> =
     transaction {
       val products = ProductEntity.find {
-        (ProductsTable.merchantId eq UUID.fromString(merchantId))
+        (ProductsTable.merchantId eq merchantId.toUUID())
       }
 
-      products.map { it.toProduct() }
+      products.map { it.toDomain() }
     }
 
   override fun createProduct(
@@ -32,10 +28,10 @@ class ProductsServiceImpl : ProductService {
     val newProduct = ProductEntity.new {
       this.barcode = createProduct.barcode
       this.name = createProduct.name
-      this.stockId = UUID.fromString(createProduct.stockId)
+      this.stockId = createProduct.stockId.toUUID()
       this.amount = createProduct.amount
       this.unit = ProductUnit.getUnitFromString(createProduct.unit)
-      this.merchantId = UUID.fromString(createProduct.merchantId)
+      this.merchantId = createProduct.merchantId.toUUID()
       this.purchasePrice = createProduct.purchasePrice
       this.sellingPrice = createProduct.sellingPrice
       this.createdOn = LocalDateTime.parse(createProduct.createdOn)

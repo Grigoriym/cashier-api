@@ -1,9 +1,9 @@
-package com.grappim.model
+package com.grappim.data_service.model
 
 import com.grappim.domain.model.general.ProductUnit
+import com.grappim.utils.serializers.BigDecimalSerializer
+import com.grappim.utils.serializers.LocalDateTimeSerializer
 import kotlinx.serialization.Serializable
-import com.grappim.serializers.BigDecimalSerializer
-import com.grappim.serializers.LocalDateTimeSerializer
 import java.math.BigDecimal
 import java.time.LocalDateTime
 

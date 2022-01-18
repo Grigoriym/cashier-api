@@ -3,7 +3,7 @@ package com.grappim.db.mappers
 import com.grappim.db.entities.ProductEntity
 import com.grappim.domain.model.product.Product
 
-fun ProductEntity.toProduct(): Product = Product(
+fun ProductEntity.toDomain(): Product = Product(
   id = this.id.value,
   barcode = this.barcode,
   name = this.name,
