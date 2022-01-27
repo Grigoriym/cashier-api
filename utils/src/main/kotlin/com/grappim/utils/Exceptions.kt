@@ -26,9 +26,6 @@ data class UserDoesNotExist(
 ) : IOException()
 
 @Serializable
-class ProductCategoryDoesNotExist : IOException()
-
-@Serializable
 data class MerchantIdIsEmpty(
   @SerialName("message")
   override val message: String = "MerchantId must not be empty",
@@ -44,9 +41,23 @@ data class StockIdIsEmpty(
   val statusCode: String = ErrorStatusCodes.STOCK_ID_IS_EMPTY
 ) : IOException()
 
-class AuthenticationException : RuntimeException()
+@Serializable
+data class ProductDoesNotExist(
+  @SerialName("message")
+  override val message: String = "Product was not found",
+  @SerialName("statusCode")
+  val statusCode: String = ErrorStatusCodes.PRODUCT_DOES_NOT_EXIST
+) : IOException()
 
-object ProductNotFound : RuntimeException()
+@Serializable
+data class ProductCategoryDoesNotExist(
+  @SerialName("message")
+  override val message: String = "Product category was not found",
+  @SerialName("statusCode")
+  val statusCode: String = ErrorStatusCodes.PRODUCT_CATEGORY_DOES_NOT_EXIST
+) : IOException()
+
+class AuthenticationException : RuntimeException()
 
 open class ApiError(
   val status: Int,

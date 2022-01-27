@@ -25,7 +25,7 @@ object ProductsTable : LongIdTable(
   val stockId: Column<UUID> = (uuid(name = "stockId").references(
     ref = StocksTable.id,
     onDelete = ReferenceOption.CASCADE
-  )).uniqueIndex()
+  ))
 
   val amount: Column<BigDecimal> = decimal(
     name = "amount",
@@ -41,7 +41,7 @@ object ProductsTable : LongIdTable(
   val merchantId: Column<UUID> = (uuid(name = "merchantId").references(
     ref = UsersTable.id,
     onDelete = ReferenceOption.CASCADE
-  )).uniqueIndex()
+  ))
 
   val purchasePrice: Column<BigDecimal> = decimal(
     name = "purchasePrice",
@@ -66,5 +66,5 @@ object ProductsTable : LongIdTable(
   val categoryId: Column<Long> = (long(name = "categoryId").references(
     ref = ProductCategoriesTable.id,
     onDelete = ReferenceOption.SET_NULL
-  )).uniqueIndex()
+  ))
 }

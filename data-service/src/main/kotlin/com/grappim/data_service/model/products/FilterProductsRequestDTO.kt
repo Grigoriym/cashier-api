@@ -1,10 +1,10 @@
-package com.grappim.data_service.model.product_category
+package com.grappim.data_service.model.products
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FilterProductCategoriesRequestDTO(
+data class FilterProductsRequestDTO(
   @SerialName("limit")
   val limit: Int,
   @SerialName("offset")

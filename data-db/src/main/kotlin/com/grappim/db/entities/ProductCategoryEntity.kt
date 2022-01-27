@@ -13,5 +13,7 @@ class ProductCategoryEntity(
   var name by ProductCategoriesTable.name
   var merchantId by ProductCategoriesTable.merchantId
   var stockId by ProductCategoriesTable.stockId
+  var updatedOn by ProductCategoriesTable.updatedOn
+  var createdOn by ProductCategoriesTable.createdOn
 
 }

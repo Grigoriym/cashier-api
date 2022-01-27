@@ -1,11 +1,11 @@
 package com.grappim.routes
 
-import com.grappim.authentication.jwt.getMerchantId
 import com.grappim.data_service.model.product_category.CreateProductCategoryRequestDTO
 import com.grappim.data_service.model.product_category.CreateProductCategoryResponseDTO
 import com.grappim.data_service.model.product_category.FilterProductCategoriesRequestDTO
 import com.grappim.data_service.model.product_category.UpdateProductCategoryDTO
 import com.grappim.domain.service.ProductCategoryService
+import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -41,7 +41,10 @@ fun Route.productCategoryRouting() {
           request.toDomain()
         )
         if (productCategories.isNotEmpty()) {
-          call.respond(productCategories)
+          val categoriesToSend = productCategories.map {
+            it.toDTO()
+          }
+          call.respond(categoriesToSend)
         } else {
           call.respondText(
             text = "No product categories found",
@@ -52,12 +55,10 @@ fun Route.productCategoryRouting() {
 
       put {
         val updateProductCategoryDTO = call.receive<UpdateProductCategoryDTO>()
-        val id = getMerchantId()
-        val productCategory = updateProductCategoryDTO.productCategory.toDomain()
-        val updatedProductCategory = productCategoryService.updateUser(
-          merchantId = id,
+        val productCategory = updateProductCategoryDTO.category.toDomain()
+        val updatedProductCategory = productCategoryService.updateCategory(
           productCategory = productCategory
-        )
+        ).toDTO()
         call.respond(updatedProductCategory)
       }
 

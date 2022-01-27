@@ -1,9 +1,8 @@
 package com.grappim.routes
 
-import com.grappim.authentication.jwt.getMerchantId
-import com.grappim.data_service.model.CreateProductRequestDTO
-import com.grappim.data_service.model.CreateProductResponseDTO
+import com.grappim.data_service.model.products.*
 import com.grappim.domain.service.ProductService
+import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -23,25 +22,26 @@ fun Route.productRouting() {
     authenticate {
       post {
         val request = call.receive<CreateProductRequestDTO>()
-        val newProductId = productService.createProduct(
+        val createdProduct = productService.createProduct(
           request.product.toDomain()
         )
         call.respond(
           CreateProductResponseDTO(
-            id = newProductId
+            product = createdProduct.toDTO()
           )
         )
       }
 
       post("/filter") {
-        val merchantId = getMerchantId()
-        val products = productService.getAllProductsByMerchantId(
-          merchantId = merchantId
-        ).map {
-
-        }
+        val request = call.receive<FilterProductsRequestDTO>()
+        val products = productService.filterProducts(
+          request.toDomain()
+        )
         if (products.isNotEmpty()) {
-          call.respond(products)
+          val productsToSend = FilterProductsResponseDTO(products.map {
+            it.toDTO()
+          })
+          call.respond(productsToSend)
         } else {
           call.respondText(
             text = "No products found",
@@ -51,7 +51,10 @@ fun Route.productRouting() {
       }
 
       put {
-
+        val updateProductDTO = call.receive<UpdateProductDTO>()
+        val product = updateProductDTO.product.toDomain()
+        val updatedProduct = productService.updateProduct(product).toDTO()
+        call.respond(updatedProduct)
       }
 
     }

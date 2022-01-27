@@ -11,7 +11,5 @@ data class CreateProduct(
   val sellingPrice: BigDecimal,
   val amount: BigDecimal,
   val barcode: String,
-  val createdOn: String,
-  val updatedOn: String,
   val categoryId: Long
 )

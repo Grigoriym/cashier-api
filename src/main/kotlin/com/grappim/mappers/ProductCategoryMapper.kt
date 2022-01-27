@@ -12,7 +12,19 @@ fun ProductCategoryDTO.toDomain(): ProductCategory =
     id = this.id,
     name = this.name,
     merchantId = this.merchantId,
-    stockId = this.stockId
+    stockId = this.stockId,
+    updatedOn = this.updatedOn,
+    createdOn = this.createdOn
+  )
+
+fun ProductCategory.toDTO(): ProductCategoryDTO =
+  ProductCategoryDTO(
+    id = this.id,
+    name = this.name,
+    merchantId = this.merchantId,
+    stockId = this.stockId,
+    updatedOn = this.updatedOn,
+    createdOn = this.createdOn
   )
 
 fun CreateProductCategoryDTO.toDomain(): CreateProductCategory =

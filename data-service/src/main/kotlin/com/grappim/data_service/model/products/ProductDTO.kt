@@ -1,8 +1,9 @@
-package com.grappim.data_service.model
+package com.grappim.data_service.model.products
 
 import com.grappim.domain.model.general.ProductUnit
 import com.grappim.utils.serializers.BigDecimalSerializer
 import com.grappim.utils.serializers.LocalDateTimeSerializer
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -40,7 +41,8 @@ data class CreateProductRequestDTO(
 
 @Serializable
 data class CreateProductResponseDTO(
-  val id: Long
+  @SerialName("product")
+  val product: ProductDTO
 )
 
 @Serializable
@@ -56,7 +58,5 @@ data class CreateProductDTO(
   @Serializable(with = BigDecimalSerializer::class)
   val amount: BigDecimal,
   val barcode: String,
-  val createdOn: String,
-  val updatedOn: String,
   val categoryId: Long
 )

@@ -14,8 +14,7 @@ interface ProductCategoryService {
     createProductCategory: CreateProductCategory
   ): Long
 
-  fun updateUser(
-    merchantId: String,
+  fun updateCategory(
     productCategory: ProductCategory
   ): ProductCategory
 
