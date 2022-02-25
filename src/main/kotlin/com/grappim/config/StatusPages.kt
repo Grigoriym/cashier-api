@@ -76,4 +76,34 @@ fun StatusPages.Configuration.statusPages() {
       )
     )
   }
+
+  exception<WaybillDoesNotExist> { cause ->
+    call.respond(
+      status = HttpStatusCode.NotFound,
+      message = mapOf(
+        "statusCode" to cause.statusCode,
+        "message" to cause.message
+      )
+    )
+  }
+
+  exception<DuplicateProductNameException> { cause ->
+    call.respond(
+      status = HttpStatusCode.NotFound,
+      message = mapOf(
+        "statusCode" to cause.statusCode,
+        "message" to cause.message
+      )
+    )
+  }
+
+  exception<DuplicateProductBarcodeException> { cause ->
+    call.respond(
+      status = HttpStatusCode.NotFound,
+      message = mapOf(
+        "statusCode" to cause.statusCode,
+        "message" to cause.message
+      )
+    )
+  }
 }

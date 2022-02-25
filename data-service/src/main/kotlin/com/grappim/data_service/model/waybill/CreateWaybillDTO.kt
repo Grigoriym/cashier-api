@@ -1,14 +1,10 @@
-package com.grappim.data_service.model.products
+package com.grappim.data_service.model.waybill
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FilterProductsRequestDTO(
-  @SerialName("limit")
-  val limit: Int,
-  @SerialName("offset")
-  val offset: Long,
+data class CreateWaybillDTO(
   @SerialName("merchantId")
   val merchantId: String,
   @SerialName("stockId")

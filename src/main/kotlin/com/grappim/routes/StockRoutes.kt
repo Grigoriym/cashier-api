@@ -1,8 +1,8 @@
 package com.grappim.routes
 
 import com.grappim.authentication.jwt.getMerchantId
-import com.grappim.data_service.model.StockDTO
-import com.grappim.data_service.model.StocksResponseDTO
+import com.grappim.data_service.model.stock.StockDTO
+import com.grappim.data_service.model.stock.StocksResponseDTO
 import com.grappim.domain.service.StockService
 import com.grappim.mappers.toDTO
 import io.ktor.application.*

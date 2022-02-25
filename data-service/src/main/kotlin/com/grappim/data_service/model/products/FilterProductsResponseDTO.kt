@@ -7,4 +7,8 @@ import kotlinx.serialization.Serializable
 data class FilterProductsResponseDTO(
   @SerialName("products")
   val products: List<ProductDTO>
-)
+) {
+  companion object {
+    fun empty(): FilterProductsResponseDTO = FilterProductsResponseDTO(emptyList())
+  }
+}

@@ -1,9 +1,6 @@
 package com.grappim.routes
 
-import com.grappim.data_service.model.product_category.CreateProductCategoryRequestDTO
-import com.grappim.data_service.model.product_category.CreateProductCategoryResponseDTO
-import com.grappim.data_service.model.product_category.FilterProductCategoriesRequestDTO
-import com.grappim.data_service.model.product_category.UpdateProductCategoryDTO
+import com.grappim.data_service.model.product_category.*
 import com.grappim.domain.service.ProductCategoryService
 import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain
@@ -41,15 +38,10 @@ fun Route.productCategoryRouting() {
           request.toDomain()
         )
         if (productCategories.isNotEmpty()) {
-          val categoriesToSend = productCategories.map {
-            it.toDTO()
-          }
-          call.respond(categoriesToSend)
+          val categoriesToSend = productCategories.toDTO()
+          call.respond(FilterProductCategoriesResponseDTO(categoriesToSend))
         } else {
-          call.respondText(
-            text = "No product categories found",
-            status = HttpStatusCode.NotFound
-          )
+          call.respond(FilterProductCategoriesResponseDTO.empty())
         }
       }
 

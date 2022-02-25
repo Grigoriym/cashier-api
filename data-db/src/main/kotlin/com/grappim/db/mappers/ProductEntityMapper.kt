@@ -17,3 +17,8 @@ fun ProductEntity.toDomain(): Product = Product(
   updatedOn = this.updatedOn,
   categoryId = this.categoryId
 )
+
+fun List<ProductEntity>.toDomain(): List<Product> =
+  this.map {
+    it.toDomain()
+  }

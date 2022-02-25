@@ -21,4 +21,12 @@ interface BaseService {
     }
   }
 
+  fun checkStockIdAndMerchantId(
+    merchantId: String,
+    stockId: String
+  ) {
+    checkMerchantId(merchantId)
+    checkStockId(stockId)
+  }
+
 }

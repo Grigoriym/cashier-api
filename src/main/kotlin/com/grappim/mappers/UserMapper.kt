@@ -1,8 +1,8 @@
 package com.grappim.mappers
 
-import com.grappim.data_service.model.LoginUserDTO
-import com.grappim.data_service.model.RegisterUserDTO
-import com.grappim.data_service.model.UpdateUserDTO
+import com.grappim.data_service.model.user.LoginUserDTO
+import com.grappim.data_service.model.user.RegisterUserDTO
+import com.grappim.data_service.model.user.UpdateUserDTO
 import com.grappim.domain.model.user.LoginUser
 import com.grappim.domain.model.user.RegisterUser
 import com.grappim.domain.model.user.UpdateUser

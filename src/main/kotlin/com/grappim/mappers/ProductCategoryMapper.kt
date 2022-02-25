@@ -27,6 +27,11 @@ fun ProductCategory.toDTO(): ProductCategoryDTO =
     createdOn = this.createdOn
   )
 
+fun List<ProductCategory>.toDTO(): List<ProductCategoryDTO> =
+  this.map {
+    it.toDTO()
+  }
+
 fun CreateProductCategoryDTO.toDomain(): CreateProductCategory =
   CreateProductCategory(
     name = this.name,

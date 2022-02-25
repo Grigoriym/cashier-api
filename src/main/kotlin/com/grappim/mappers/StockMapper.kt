@@ -1,6 +1,6 @@
 package com.grappim.mappers
 
-import com.grappim.data_service.model.StockDTO
+import com.grappim.data_service.model.stock.StockDTO
 import com.grappim.domain.model.stock.Stock
 
 fun Stock.toDTO(): StockDTO = StockDTO(

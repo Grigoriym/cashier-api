@@ -8,6 +8,10 @@ plugins {
 repositories {
     gradlePluginPortal()
     mavenCentral()
+  maven {
+    url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
+    name = "ktor-eap"
+  }
 }
 
 tasks.withType<KotlinCompile> {

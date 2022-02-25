@@ -12,7 +12,7 @@ object StocksTable : UUIDTable(
   val merchantId: Column<UUID> = (uuid(name = "merchantId").references(
     ref = UsersTable.id,
     onDelete = ReferenceOption.CASCADE
-  )).uniqueIndex()
+  ))
 
   val stockName: Column<String> = varchar(
     name = "stockName",

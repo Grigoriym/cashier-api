@@ -9,20 +9,21 @@ import kotlinx.serialization.encoding.Encoder
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 object LocalDateTimeSerializer : KSerializer<LocalDateTime> {
 
-    override fun deserialize(decoder: Decoder): LocalDateTime {
-        val millis = decoder.decodeLong()
-        return LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
-    }
+  override fun deserialize(decoder: Decoder): LocalDateTime {
+    val millis = decoder.decodeLong()
+    return LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
+  }
 
-    override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor("date", PrimitiveKind.LONG)
+  override val descriptor: SerialDescriptor =
+    PrimitiveSerialDescriptor("date", PrimitiveKind.LONG)
 
-    override fun serialize(encoder: Encoder, value: LocalDateTime) {
-        encoder.encodeLong(
-            Instant.from(value.atZone(ZoneId.systemDefault())).toEpochMilli()
-        )
-    }
+  override fun serialize(encoder: Encoder, value: LocalDateTime) {
+    encoder.encodeString(
+      value.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+    )
+  }
 }

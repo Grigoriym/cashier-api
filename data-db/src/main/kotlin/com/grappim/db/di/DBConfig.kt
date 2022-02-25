@@ -7,18 +7,27 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object DBConfig {
   fun createTables() = transaction {
 //    SchemaUtils.drop(
-//    UsersTable,
-//    StocksTable,
-//    CashBoxesTable,
-//    ProductsTable,
-//    ProductCategoriesTable
+//      UsersTable,
+//      StocksTable,
+//      CashBoxesTable,
+//      ProductsTable,
+//      ProductCategoriesTable,
+//      WaybillTable,
+//      WaybillProductTable,
+//      OrderTable,
+//      OrderItemTable
 //    )//todo wait for versions migrations
+
     SchemaUtils.create(
       UsersTable,
       StocksTable,
       CashBoxesTable,
       ProductsTable,
-      ProductCategoriesTable
+      ProductCategoriesTable,
+      WaybillTable,
+      WaybillProductTable,
+      OrderTable,
+      OrderItemTable
     )
   }
 }

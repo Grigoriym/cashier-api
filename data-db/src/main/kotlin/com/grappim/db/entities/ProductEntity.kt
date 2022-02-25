@@ -8,6 +8,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 class ProductEntity(
   id: EntityID<Long>
 ) : LongEntity(id) {
+
   companion object : LongEntityClass<ProductEntity>(ProductsTable)
 
   var barcode by ProductsTable.barcode

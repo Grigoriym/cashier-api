@@ -19,6 +19,9 @@ private fun Routing.apiRoute() {
         authRouting()
         productRouting()
         productCategoryRouting()
+        waybillRouting()
+        waybillProductRouting()
+        orderRouting()
     }
 }
 

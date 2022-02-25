@@ -1,10 +1,8 @@
 package com.grappim.mappers
 
 import com.grappim.data_service.model.products.CreateProductDTO
-import com.grappim.data_service.model.products.FilterProductsRequestDTO
 import com.grappim.data_service.model.products.ProductDTO
 import com.grappim.domain.model.product.CreateProduct
-import com.grappim.domain.model.product.FilterProductsRequest
 import com.grappim.domain.model.product.Product
 
 fun CreateProductDTO.toDomain(): CreateProduct = CreateProduct(
@@ -34,13 +32,10 @@ fun Product.toDTO(): ProductDTO = ProductDTO(
   updatedOn = this.updatedOn
 )
 
-fun FilterProductsRequestDTO.toDomain(): FilterProductsRequest =
-  FilterProductsRequest(
-    limit = this.limit,
-    offset = this.offset,
-    merchantId = this.merchantId,
-    stockId = this.stockId
-  )
+fun List<Product>.toDTO(): List<ProductDTO> =
+  this.map {
+    it.toDTO()
+  }
 
 fun ProductDTO.toDomain(): Product =
   Product(

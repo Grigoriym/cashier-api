@@ -57,6 +57,32 @@ data class ProductCategoryDoesNotExist(
   val statusCode: String = ErrorStatusCodes.PRODUCT_CATEGORY_DOES_NOT_EXIST
 ) : IOException()
 
+@Serializable
+data class WaybillDoesNotExist(
+  @SerialName("message")
+  override val message: String = "Waybill was not found",
+  @SerialName("statusCode")
+  val statusCode: String = ErrorStatusCodes.PRODUCT_CATEGORY_DOES_NOT_EXIST
+) : IOException()
+
+@Serializable
+data class DuplicateProductNameException(
+  val name: String,
+  @SerialName("message")
+  override val message: String = "Product with that name: $name already exists",
+  @SerialName("statusCode")
+  val statusCode: String = ErrorStatusCodes.DUPLICATE_PRODUCT_NAME
+) : IOException()
+
+@Serializable
+data class DuplicateProductBarcodeException(
+  val barcode: String,
+  @SerialName("message")
+  override val message: String = "Product with that barcode: $barcode already exists",
+  @SerialName("statusCode")
+  val statusCode: String = ErrorStatusCodes.DUPLICATE_PRODUCT_BARCODE
+) : IOException()
+
 class AuthenticationException : RuntimeException()
 
 open class ApiError(

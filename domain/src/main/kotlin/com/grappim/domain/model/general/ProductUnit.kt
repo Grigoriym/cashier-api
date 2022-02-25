@@ -15,7 +15,7 @@ enum class ProductUnit(
                 METRE.unit -> METRE
                 LITRE.unit -> LITRE
                 PIECE.unit -> PIECE
-                else -> error("incorrect product unit")
+                else -> error("incorrect product unit: $text")
             }
     }
 }

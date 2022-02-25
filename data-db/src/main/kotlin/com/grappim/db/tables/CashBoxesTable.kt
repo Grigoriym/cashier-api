@@ -17,11 +17,11 @@ object CashBoxesTable : UUIDTable(
   val merchantId: Column<UUID> = (uuid(name = "merchantId").references(
     ref = UsersTable.id,
     onDelete = ReferenceOption.CASCADE
-  )).uniqueIndex()
+  ))
 
   val stockId: Column<UUID> = (uuid(name = "stockId").references(
     ref = StocksTable.id,
     onDelete = ReferenceOption.CASCADE
-  )).uniqueIndex()
+  ))
 
 }

@@ -15,12 +15,12 @@ object ProductsTable : LongIdTable(
   val barcode: Column<String> = varchar(
     name = "barcode",
     length = 50
-  )
+  ).uniqueIndex()
 
   val name: Column<String> = varchar(
     name = "name",
     length = 255
-  )
+  ).uniqueIndex()
 
   val stockId: Column<UUID> = (uuid(name = "stockId").references(
     ref = StocksTable.id,
