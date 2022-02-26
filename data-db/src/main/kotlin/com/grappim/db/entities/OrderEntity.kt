@@ -1,5 +1,6 @@
 package com.grappim.db.entities
 
+import com.grappim.db.tables.OrderItemTable
 import com.grappim.db.tables.OrderTable
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
@@ -17,5 +18,6 @@ class OrderEntity(
   var timestamp by OrderTable.timestamp
   var totalSum by OrderTable.totalSum
   var payType by OrderTable.payType
-  var orderItems by OrderItemEntity referencedOn OrderTable.orderItems
+
+  val orderItems by OrderItemEntity referrersOn OrderItemTable.order
 }

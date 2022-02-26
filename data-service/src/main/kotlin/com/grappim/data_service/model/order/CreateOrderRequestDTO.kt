@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateOrderResponseDTO(
-  @SerialName("id")
-  val id: Long
+data class CreateOrderRequestDTO(
+  @SerialName("order")
+  val order: CreateOrderDTO
 )

@@ -1,6 +1,6 @@
 package com.grappim.routes
 
-import com.grappim.data_service.model.order.CreateOrderDTO
+import com.grappim.data_service.model.order.CreateOrderRequestDTO
 import com.grappim.data_service.model.order.CreateOrderResponseDTO
 import com.grappim.domain.service.OrderService
 import com.grappim.mappers.toDomain
@@ -19,9 +19,9 @@ fun Route.orderRouting() {
   route("/order") {
     authenticate {
       post("/create") {
-        val request = call.receive<CreateOrderDTO>()
+        val request = call.receive<CreateOrderRequestDTO>()
         val createdOrderId = orderService.createOrder(
-          request.toDomain()
+          request.order.toDomain()
         )
         call.respond(
           CreateOrderResponseDTO(

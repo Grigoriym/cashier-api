@@ -1,16 +1,35 @@
 package com.grappim.utils
 
 object ErrorStatusCodes {
-  const val USER_DOES_NOT_EXIST = "CASHIER.API.6900"
 
-  const val MERCHANT_ID_IS_EMPTY = "CASHIER.API.6901"
-  const val STOCK_ID_IS_EMPTY = "CASHIER.API.6902"
+  private const val CASHIER_API = "CASHIER.API"
 
-  const val PRODUCT_DOES_NOT_EXIST = "CASHIER.API.6903"
-  const val PRODUCT_CATEGORY_DOES_NOT_EXIST = "CASHIER.API.6904"
+  object Waybill {
 
-  const val WAYBILL_DOES_NOT_EXIST = "CASHIER.API.6905"
+  }
 
-  const val DUPLICATE_PRODUCT_NAME = "CASHIER.API.6906"
-  const val DUPLICATE_PRODUCT_BARCODE = "CASHIER.API.6907"
+  object Category {
+    private const val EMPTY_NAME = "7100"
+
+    const val PRODUCT_CATEGORY_NAME_IS_EMPTY = "$CASHIER_API.$EMPTY_NAME"
+  }
+
+  object Product {
+    private const val DUPLICATE_NAME = "7000"
+    private const val DUPLICATE_BARCODE = "7001"
+
+    const val DUPLICATE_PRODUCT_NAME = "$CASHIER_API.${DUPLICATE_NAME}"
+    const val DUPLICATE_PRODUCT_BARCODE = "$CASHIER_API.${DUPLICATE_BARCODE}"
+  }
+
+  const val USER_DOES_NOT_EXIST = "$CASHIER_API.6900"
+
+  const val MERCHANT_ID_IS_EMPTY = "$CASHIER_API.6901"
+  const val STOCK_ID_IS_EMPTY = "$CASHIER_API.6902"
+
+  const val PRODUCT_DOES_NOT_EXIST = "$CASHIER_API.6903"
+  const val PRODUCT_CATEGORY_DOES_NOT_EXIST = "$CASHIER_API.6904"
+
+  const val WAYBILL_DOES_NOT_EXIST = "$CASHIER_API.6905"
+
 }

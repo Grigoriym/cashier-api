@@ -2,6 +2,7 @@ package com.grappim.db.tables
 
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.ReferenceOption
 import java.math.BigDecimal
 
 object OrderItemTable : LongIdTable(
@@ -37,6 +38,12 @@ object OrderItemTable : LongIdTable(
   val name: Column<String> = varchar(
     name = "name",
     length = 255
+  )
+
+  val order = reference(
+    name = "order",
+    foreign = OrderTable,
+    onDelete = ReferenceOption.CASCADE
   )
 
 }

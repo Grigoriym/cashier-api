@@ -8,12 +8,10 @@ import com.grappim.domain.model.product_category.FilterProductCategoriesRequest
 import com.grappim.domain.model.product_category.ProductCategory
 import com.grappim.domain.service.ProductCategoryService
 import com.grappim.utils.ProductCategoryDoesNotExist
+import com.grappim.utils.ProductNameIsEmptyException
 import com.grappim.utils.toUUID
-import org.jetbrains.exposed.sql.SortOrder
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 
 class ProductCategoryServiceImpl : ProductCategoryService, BaseService {
@@ -43,15 +41,22 @@ class ProductCategoryServiceImpl : ProductCategoryService, BaseService {
     createProductCategory: CreateProductCategory
   ): Long =
     transaction {
-      val newProductCategory = ProductCategoryEntity.new {
-        this.name = createProductCategory.name
-        this.stockId = createProductCategory.stockId.toUUID()
-        this.merchantId = createProductCategory.merchantId.toUUID()
-        this.createdOn = LocalDateTime.now()
-        this.updatedOn = LocalDateTime.now()
+      checkName(createProductCategory.name)
+      val newProductCategoryId = ProductCategoriesTable.insertAndGetId {
+        it[name] = createProductCategory.name
+        it[stockId] = createProductCategory.stockId.toUUID()
+        it[merchantId] = createProductCategory.merchantId.toUUID()
+        it[createdOn] = LocalDateTime.now()
+        it[updatedOn] = LocalDateTime.now()
       }
-      return@transaction newProductCategory.id.value
+      return@transaction newProductCategoryId.value
     }
+
+  private fun checkName(name: String) {
+    if (name.isEmpty()) {
+      throw ProductNameIsEmptyException()
+    }
+  }
 
   private fun getCategory(categoryId: Long): ProductCategory = transaction {
     val entity = ProductCategoryEntity

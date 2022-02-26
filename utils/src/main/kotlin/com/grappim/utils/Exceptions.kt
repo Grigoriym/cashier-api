@@ -58,11 +58,20 @@ data class ProductCategoryDoesNotExist(
 ) : IOException()
 
 @Serializable
+data class ProductNameIsEmptyException(
+  @SerialName("message")
+  override val message: String = "Product category name must not be empty",
+  @SerialName("statusCode")
+  val statusCode: String = ErrorStatusCodes.Category.PRODUCT_CATEGORY_NAME_IS_EMPTY
+) : IOException()
+
+
+@Serializable
 data class WaybillDoesNotExist(
   @SerialName("message")
   override val message: String = "Waybill was not found",
   @SerialName("statusCode")
-  val statusCode: String = ErrorStatusCodes.PRODUCT_CATEGORY_DOES_NOT_EXIST
+  val statusCode: String = ErrorStatusCodes.WAYBILL_DOES_NOT_EXIST
 ) : IOException()
 
 @Serializable
@@ -71,7 +80,7 @@ data class DuplicateProductNameException(
   @SerialName("message")
   override val message: String = "Product with that name: $name already exists",
   @SerialName("statusCode")
-  val statusCode: String = ErrorStatusCodes.DUPLICATE_PRODUCT_NAME
+  val statusCode: String = ErrorStatusCodes.Product.DUPLICATE_PRODUCT_NAME
 ) : IOException()
 
 @Serializable
@@ -80,7 +89,7 @@ data class DuplicateProductBarcodeException(
   @SerialName("message")
   override val message: String = "Product with that barcode: $barcode already exists",
   @SerialName("statusCode")
-  val statusCode: String = ErrorStatusCodes.DUPLICATE_PRODUCT_BARCODE
+  val statusCode: String = ErrorStatusCodes.Product.DUPLICATE_PRODUCT_BARCODE
 ) : IOException()
 
 class AuthenticationException : RuntimeException()

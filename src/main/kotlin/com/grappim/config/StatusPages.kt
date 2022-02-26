@@ -77,6 +77,16 @@ fun StatusPages.Configuration.statusPages() {
     )
   }
 
+  exception<ProductNameIsEmptyException> { cause ->
+    call.respond(
+      status = HttpStatusCode.NotFound,
+      message = mapOf(
+        "statusCode" to cause.statusCode,
+        "message" to cause.message
+      )
+    )
+  }
+
   exception<WaybillDoesNotExist> { cause ->
     call.respond(
       status = HttpStatusCode.NotFound,

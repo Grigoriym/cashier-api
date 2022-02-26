@@ -17,5 +17,6 @@ class OrderItemEntity(
   var purchasePrice by OrderItemTable.purchasePrice
   var barcode by OrderItemTable.barcode
   var name by OrderItemTable.name
+  var order by OrderEntity referencedOn OrderItemTable.order
 
 }
