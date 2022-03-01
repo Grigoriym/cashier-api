@@ -45,7 +45,7 @@ class OrderServiceImpl : OrderService, BaseService {
         this.purchasePrice = orderItem.purchasePrice
         this.barcode = orderItem.barcode
         this.name = orderItem.name
-//        this.order = orderEntity
+        this.order = orderEntity
       }
     }
   }
