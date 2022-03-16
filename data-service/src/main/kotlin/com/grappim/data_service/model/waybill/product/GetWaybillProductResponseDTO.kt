@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UpdateWaybillProductDTO(
+data class GetWaybillProductResponseDTO(
   @SerialName("product")
-  val product: PartialWaybillProductDTO
+  val product: WaybillProductDTO
 )

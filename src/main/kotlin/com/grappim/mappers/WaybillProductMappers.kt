@@ -1,11 +1,7 @@
 package com.grappim.mappers
 
-import com.grappim.data_service.model.waybill.product.CreateWaybillProductDTO
-import com.grappim.data_service.model.waybill.product.FilterWaybillProductDTO
-import com.grappim.data_service.model.waybill.product.WaybillProductDTO
-import com.grappim.domain.model.waybill.CreateWaybillProduct
-import com.grappim.domain.model.waybill.FilterWaybillProduct
-import com.grappim.domain.model.waybill.WaybillProduct
+import com.grappim.data_service.model.waybill.product.*
+import com.grappim.domain.model.waybill.*
 
 fun CreateWaybillProductDTO.toDomain(): CreateWaybillProduct =
   CreateWaybillProduct(
@@ -58,4 +54,22 @@ fun FilterWaybillProductDTO.toDomain(): FilterWaybillProduct =
     limit = this.limit,
     offset = this.offset,
     waybillId = this.waybillId
+  )
+
+fun GetWaybillByBarcodeRequestDTO.toDomain(): GetWaybillProduct =
+  GetWaybillProduct(
+    barcode = this.barcode,
+    waybillId = this.waybillId
+  )
+
+fun PartialWaybillProductDTO.toDomain(): PartialWaybillProduct =
+  PartialWaybillProduct(
+    id = id,
+    amount = amount,
+    barcode = barcode,
+    name = name,
+    purchasePrice = purchasePrice,
+    sellingPrice = sellingPrice,
+    waybillId = waybillId,
+    productId = productId
   )

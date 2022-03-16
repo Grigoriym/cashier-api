@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
 @Serializable
-data class CreateWaybillProductResponseDTO(
+data class UpdateWaybillProductResponseDTO(
   @SerialName("totalCost")
   @Serializable(BigDecimalSerializer::class)
   val totalCost: BigDecimal

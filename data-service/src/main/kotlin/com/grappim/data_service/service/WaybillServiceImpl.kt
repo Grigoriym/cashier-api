@@ -103,4 +103,18 @@ class WaybillServiceImpl : WaybillService, BaseService {
     }
   }
 
+  override fun conductWaybill(waybillId: Long): Int = transaction {
+    WaybillTable.update({ WaybillTable.id eq waybillId }) { waybill ->
+      waybill[status] = WaybillStatus.ACTIVE
+      waybill[updatedOn] = LocalDateTime.now()
+    }
+  }
+
+  override fun rollbackWaybill(waybillId: Long): Int = transaction {
+    WaybillTable.update({ WaybillTable.id eq waybillId }) { waybill ->
+      waybill[status] = WaybillStatus.DRAFT
+      waybill[updatedOn] = LocalDateTime.now()
+    }
+  }
+
 }

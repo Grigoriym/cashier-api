@@ -1,17 +1,19 @@
 package com.grappim.data_service.service
 
+import com.grappim.db.entities.WaybillEntity
 import com.grappim.db.entities.WaybillProductEntity
 import com.grappim.db.mappers.toDomain
 import com.grappim.db.tables.WaybillProductTable
-import com.grappim.domain.model.waybill.CreateWaybillProduct
-import com.grappim.domain.model.waybill.FilterWaybillProduct
-import com.grappim.domain.model.waybill.WaybillProduct
+import com.grappim.db.tables.WaybillTable
+import com.grappim.domain.model.waybill.*
 import com.grappim.domain.service.WaybillProductService
 import com.grappim.utils.ProductDoesNotExist
+import com.grappim.utils.WaybillDoesNotExist
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class WaybillProductServiceImpl : WaybillProductService, BaseService {
@@ -31,7 +33,7 @@ class WaybillProductServiceImpl : WaybillProductService, BaseService {
 
   override fun createProduct(
     createWaybillProduct: CreateWaybillProduct
-  ): WaybillProduct = transaction {
+  ): BigDecimal = transaction {
     val newProduct = WaybillProductEntity.new {
       this.name = createWaybillProduct.name
       this.barcode = createWaybillProduct.barcode
@@ -46,10 +48,25 @@ class WaybillProductServiceImpl : WaybillProductService, BaseService {
       this.createdOn = LocalDateTime.now()
       this.updatedOn = LocalDateTime.now()
     }
-    return@transaction newProduct.toDomain()
+
+    val waybill = getWaybill(newProduct.waybillId)
+    val totalCost = waybill.totalCost + (newProduct.purchasePrice * newProduct.amount)
+    setNewTotalCost(waybill.id, totalCost)
+    totalCost
   }
 
-  override fun updateProduct(updateProduct: WaybillProduct): WaybillProduct =
+  private fun setNewTotalCost(
+    waybillId: Long,
+    newTotalCost: BigDecimal
+  ) = transaction {
+    WaybillTable.update({ WaybillTable.id eq waybillId }) { waybill ->
+      waybill[totalCost] = newTotalCost
+    }
+  }
+
+  override fun updateProduct(
+    updateProduct: PartialWaybillProduct
+  ): BigDecimal =
     transaction {
       WaybillProductTable.update({ WaybillProductTable.id eq updateProduct.id }) { product ->
         product[name] = updateProduct.name
@@ -62,10 +79,12 @@ class WaybillProductServiceImpl : WaybillProductService, BaseService {
         product[waybillId] = updateProduct.waybillId
         product[productId] = updateProduct.productId
 
-        product[createdOn] = updateProduct.createdOn
         product[updatedOn] = LocalDateTime.now()
       }
-      getWaybillProduct(updateProduct.id)
+      val waybill = getWaybill(updateProduct.waybillId)
+      val totalCost = waybill.totalCost + (updateProduct.purchasePrice * updateProduct.amount)
+      setNewTotalCost(waybill.id, totalCost)
+      totalCost
     }
 
   override fun deleteProduct(id: Long): Int = transaction {
@@ -74,10 +93,31 @@ class WaybillProductServiceImpl : WaybillProductService, BaseService {
     }
   }
 
+  private fun getWaybill(waybillId: Long): Waybill = transaction {
+    val entity = WaybillEntity
+      .findById(waybillId) ?: throw WaybillDoesNotExist()
+    entity.toDomain()
+  }
+
   private fun getWaybillProduct(
     id: Long
   ): WaybillProduct = transaction {
     val entity = WaybillProductEntity.findById(id) ?: throw ProductDoesNotExist()
     entity.toDomain()
+  }
+
+  private fun getWaybillProduct(
+    barcode: String
+  ): WaybillProduct = transaction {
+    val entity = WaybillProductEntity.find {
+      WaybillProductTable.barcode eq barcode
+    }.firstOrNull() ?: throw ProductDoesNotExist()
+    entity.toDomain()
+  }
+
+  override fun getProduct(
+    getWaybillProduct: GetWaybillProduct
+  ): WaybillProduct = transaction {
+    getWaybillProduct(getWaybillProduct.barcode)
   }
 }

@@ -5,6 +5,7 @@ import com.grappim.data_service.model.waybill.CreateWaybillRequestDTO
 import com.grappim.data_service.model.waybill.CreateWaybillResponseDTO
 import com.grappim.data_service.model.waybill.FilterWaybillsResponseDTO
 import com.grappim.data_service.model.waybill.UpdateWaybillDTO
+import com.grappim.data_service.model.waybill.product.GetWaybillByIdResponseDTO
 import com.grappim.domain.service.WaybillService
 import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain
@@ -49,20 +50,35 @@ fun Route.waybillRouting() {
           )
         }
       }
-      put {
+      put("/update") {
         val updateWaybillDTO = call.receive<UpdateWaybillDTO>()
         val waybill = updateWaybillDTO.waybill.toDomain()
         val updatedWaybill = waybillService.updateWaybill(waybill).toDTO()
-        call.respond(updatedWaybill)
+        call.respond(GetWaybillByIdResponseDTO(updatedWaybill))
       }
       delete("/{id}") {
-        val waybillId = call.parameters["id"] ?: return@delete
-        call.respond(HttpStatusCode.BadRequest)
+        val waybillId = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
 
         waybillService.deleteWaybill(waybillId.toLong())
 
         call.respondText(
           text = "Waybill deleted",
+          status = HttpStatusCode.OK
+        )
+      }
+      get("/conduct/{id}") {
+        val waybillId = call.parameters["id"]?.toLongOrNull() ?: return@get call.respond(HttpStatusCode.BadRequest)
+        waybillService.conductWaybill(waybillId)
+        call.respondText(
+          text = "Waybill conducted",
+          status = HttpStatusCode.OK
+        )
+      }
+      get("/rollback/{id}") {
+        val waybillId = call.parameters["id"]?.toLongOrNull() ?: return@get call.respond(HttpStatusCode.BadRequest)
+        waybillService.rollbackWaybill(waybillId)
+        call.respondText(
+          text = "Waybill conducted",
           status = HttpStatusCode.OK
         )
       }

@@ -33,5 +33,5 @@ data class WaybillDTO(
   val comment: String,
   @SerialName("reservedTime")
   @Serializable(LocalDateTimeSerializer::class)
-  val reservedTime: LocalDateTime?
+  val reservedTime: LocalDateTime? = null
 )

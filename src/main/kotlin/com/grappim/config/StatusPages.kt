@@ -10,13 +10,12 @@ fun StatusPages.Configuration.statusPages() {
   exception<AuthenticationException> {
     call.respond(HttpStatusCode.Unauthorized)
   }
-  exception<UserExists> {
+  exception<UserExists> { cause ->
     call.respond(
       status = HttpStatusCode.UnprocessableEntity,
       message = mapOf(
-        "errors" to mapOf(
-          "user" to listOf("exists")
-        )
+        "statusCode" to cause.statusCode,
+        "message" to cause.message
       )
     )
   }

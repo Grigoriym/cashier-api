@@ -22,6 +22,12 @@ object ErrorStatusCodes {
     const val DUPLICATE_PRODUCT_BARCODE = "$CASHIER_API.${DUPLICATE_BARCODE}"
   }
 
+  object User {
+    private const val USER_EXISTS = "8000"
+
+    const val USER_EXISTS_ERROR = "$CASHIER_API.$USER_EXISTS"
+  }
+
   const val USER_DOES_NOT_EXIST = "$CASHIER_API.6900"
 
   const val MERCHANT_ID_IS_EMPTY = "$CASHIER_API.6901"

@@ -14,12 +14,12 @@ import java.time.format.DateTimeFormatter
 object LocalDateTimeSerializer : KSerializer<LocalDateTime> {
 
   override fun deserialize(decoder: Decoder): LocalDateTime {
-    val millis = decoder.decodeLong()
-    return LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
+    val millis = decoder.decodeString()
+    return LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(millis))
   }
 
   override val descriptor: SerialDescriptor =
-    PrimitiveSerialDescriptor("date", PrimitiveKind.LONG)
+    PrimitiveSerialDescriptor("date", PrimitiveKind.STRING)
 
   override fun serialize(encoder: Encoder, value: LocalDateTime) {
     encoder.encodeString(

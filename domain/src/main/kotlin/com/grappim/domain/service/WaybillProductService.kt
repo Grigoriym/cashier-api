@@ -1,8 +1,7 @@
 package com.grappim.domain.service
 
-import com.grappim.domain.model.waybill.CreateWaybillProduct
-import com.grappim.domain.model.waybill.FilterWaybillProduct
-import com.grappim.domain.model.waybill.WaybillProduct
+import com.grappim.domain.model.waybill.*
+import java.math.BigDecimal
 
 interface WaybillProductService {
 
@@ -10,13 +9,15 @@ interface WaybillProductService {
 
   fun createProduct(
     createWaybillProduct: CreateWaybillProduct
-  ): WaybillProduct
+  ): BigDecimal
 
   fun updateProduct(
-    updateProduct: WaybillProduct
-  ): WaybillProduct
+    updateProduct: PartialWaybillProduct
+  ): BigDecimal
 
   fun deleteProduct(
     id: Long
   ): Int
+
+  fun getProduct(getWaybillProduct: GetWaybillProduct): WaybillProduct
 }

@@ -4,7 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UpdateWaybillProductDTO(
-  @SerialName("product")
-  val product: PartialWaybillProductDTO
+data class GetWaybillByBarcodeRequestDTO(
+  @SerialName("barcode")
+  val barcode: String,
+  @SerialName("waybillId")
+  val waybillId: Long
 )

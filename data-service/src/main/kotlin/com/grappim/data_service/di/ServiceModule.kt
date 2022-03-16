@@ -15,4 +15,5 @@ fun DI.MainBuilder.serviceModule() {
   bind<WaybillService>() with singleton { WaybillServiceImpl() }
   bind<WaybillProductService>() with singleton { WaybillProductServiceImpl() }
   bind<OrderService>() with singleton { OrderServiceImpl() }
+  bind<BasketService>() with singleton { BasketServiceImpl() }
 }

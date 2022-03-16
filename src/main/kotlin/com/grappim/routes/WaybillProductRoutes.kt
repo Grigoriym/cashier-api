@@ -12,7 +12,6 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
-import java.math.BigDecimal
 
 fun Route.waybillProductRouting() {
 
@@ -34,24 +33,29 @@ fun Route.waybillProductRouting() {
           call.respond(FilterWaybillProductsResponseDTO.empty())
         }
       }
+      post("/get") {
+        val request = call.receive<GetWaybillByBarcodeRequestDTO>()
+        val domain = request.toDomain()
+        val foundProduct = waybillProductService.getProduct(domain).toDTO()
+        call.respond(GetWaybillProductResponseDTO(foundProduct))
+      }
 
       post {
         val request = call.receive<CreateWaybillProductRequestDTO>()
         val createdProduct = waybillProductService.createProduct(
           request.product.toDomain()
-        ).toDTO()
+        )
         call.respond(
           CreateWaybillProductResponseDTO(
-            totalCost = BigDecimal.ZERO,
-            product = createdProduct
+            createdProduct
           )
         )
       }
       put {
         val updateProductDTO = call.receive<UpdateWaybillProductDTO>()
         val product = updateProductDTO.product.toDomain()
-        val updatedProduct = waybillProductService.updateProduct(product).toDTO()
-        call.respond(updatedProduct)
+        val updatedProduct = waybillProductService.updateProduct(product)
+        call.respond(UpdateWaybillProductResponseDTO(updatedProduct))
       }
 
       delete("/{id}") {

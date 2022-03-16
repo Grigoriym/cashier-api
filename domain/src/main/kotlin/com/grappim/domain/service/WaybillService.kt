@@ -16,10 +16,18 @@ interface WaybillService {
 
   fun updateWaybill(
     newWaybill: Waybill
-  ) :Waybill
+  ): Waybill
 
   fun deleteWaybill(
     id: Long
+  ): Int
+
+  fun conductWaybill(
+    waybillId: Long
+  ): Int
+
+  fun rollbackWaybill(
+    waybillId: Long
   ): Int
 
 }

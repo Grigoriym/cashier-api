@@ -15,7 +15,8 @@ object DBConfig {
 //      WaybillTable,
 //      WaybillProductTable,
 //      OrderTable,
-//      OrderItemTable
+//      OrderItemTable,
+//      BasketTable
 //    )//todo wait for versions migrations
 
     SchemaUtils.create(
@@ -27,7 +28,8 @@ object DBConfig {
       WaybillTable,
       WaybillProductTable,
       OrderTable,
-      OrderItemTable
+      OrderItemTable,
+      BasketTable
     )
   }
 }

@@ -25,6 +25,7 @@ fun Application.module() {
       isLenient = true
       prettyPrint = false
       ignoreUnknownKeys = true
+      explicitNulls = true
     })
   }
   install(CallLogging) {

@@ -22,6 +22,7 @@ private fun Routing.apiRoute() {
         waybillRouting()
         waybillProductRouting()
         orderRouting()
+        basketRouting()
     }
 }
 

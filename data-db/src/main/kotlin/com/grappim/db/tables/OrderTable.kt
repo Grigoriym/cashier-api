@@ -1,7 +1,5 @@
 package com.grappim.db.tables
 
-import com.grappim.db.entities.OrderItemEntity
-import com.grappim.db.entities.OrderItemEntity.Companion.referrersOn
 import com.grappim.domain.model.order.PayType
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.Column

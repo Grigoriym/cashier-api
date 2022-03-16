@@ -5,7 +5,13 @@ import kotlinx.serialization.Serializable
 import java.io.IOException
 import java.time.OffsetDateTime
 
-class UserExists : RuntimeException()
+@Serializable
+data class UserExists(
+  @SerialName("message")
+  override val message: String = "User already exists",
+  @SerialName("statusCode")
+  val statusCode: String = ErrorStatusCodes.User.USER_EXISTS_ERROR
+) : IOException()
 
 sealed class RegisterUserIncorrectFieldsException(
   open val exceptionMessage: String
