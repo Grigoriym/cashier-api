@@ -8,5 +8,6 @@ fun BaseFilterDTO.toDomain(): BaseFilter =
     limit = this.limit,
     offset = this.offset,
     merchantId = this.merchantId,
-    stockId = this.stockId
+    stockId = this.stockId,
+    query = this.query
   )

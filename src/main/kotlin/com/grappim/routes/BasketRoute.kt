@@ -1,7 +1,13 @@
 package com.grappim.routes
 
+import com.grappim.authentication.jwt.getMerchantId
+import com.grappim.data_service.model.basket.AddBasketProductDTO
+import com.grappim.data_service.model.basket.BasketProductDTO
+import com.grappim.data_service.model.basket.SearchProductsRequestDTO
+import com.grappim.data_service.model.basket.SubtractBasketProductResponseDTO
 import com.grappim.data_service.model.products.ProductDTO
 import com.grappim.domain.service.BasketService
+import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -17,22 +23,42 @@ fun Route.basketRouting() {
 
   route("/basket") {
     authenticate {
-      post("/add") {
-        val productToAdd = call.receive<ProductDTO>()
-        val product = productToAdd.toDomain()
-        basketService.addProductToBasket(product)
-        call.respondText(
-          text = "Product added",
-          status = HttpStatusCode.OK
-        )
+      get {
+        val merchantId = getMerchantId()
+        val stockId = call.parameters["stockId"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+        val products = basketService.getBasketProducts(
+          merchantId = merchantId,
+          stockId = stockId
+        ).map {
+          it.toDTO()
+        }
+        call.respond(products)
       }
-      post("/subtract"){
-        val productToSubtract = call.receive<ProductDTO>()
+      post("/add") {
+        val productToAdd = call.receive<AddBasketProductDTO>()
+        val product = productToAdd.toDomain()
+        val basketProduct = basketService.addProductToBasket(product)
+        call.respond(basketProduct.toDTO())
+      }
+      post("/subtract") {
+        val productToSubtract = call.receive<BasketProductDTO>()
         val product = productToSubtract.toDomain()
+        val basketProduct = basketService.subtractProduct(product)
+        call.respond(
+          SubtractBasketProductResponseDTO(
+            basketProduct = basketProduct.basketProduct?.toDTO(),
+            isRemoved = basketProduct.isRemoved
+          )
+        )
       }
       post("/remove") {
         val productToRemove = call.receive<ProductDTO>()
         val product = productToRemove.toDomain()
+        basketService.removeProductFromBasket(product)
+        call.respondText(
+          text = "Product remove",
+          status = HttpStatusCode.OK
+        )
       }
       delete("/clear") {
         basketService.removeBasket()
@@ -40,6 +66,16 @@ fun Route.basketRouting() {
           text = "Basket cleared",
           status = HttpStatusCode.OK
         )
+      }
+      post("/search") {
+        val merchantId = getMerchantId()
+        val request = call.receive<SearchProductsRequestDTO>()
+        val products = basketService.searchProducts(
+          merchantId = merchantId,
+          stockId = request.stockId,
+          searchQuery = request.searchQuery
+        )
+        call.respond(products.map { it.toDTO() })
       }
     }
   }

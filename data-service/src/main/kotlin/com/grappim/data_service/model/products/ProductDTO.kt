@@ -3,21 +3,25 @@ package com.grappim.data_service.model.products
 import com.grappim.domain.model.general.ProductUnit
 import com.grappim.utils.serializers.BigDecimalSerializer
 import com.grappim.utils.serializers.LocalDateTimeSerializer
+import com.grappim.utils.serializers.UUIDSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import java.util.*
 
 @Serializable
 data class ProductDTO(
   val id: Long,
   val barcode: String,
   val name: String,
-  val stockId: String,
+  @Serializable(with = UUIDSerializer::class)
+  val stockId: UUID,
   @Serializable(with = BigDecimalSerializer::class)
   val amount: BigDecimal,
   val unit: ProductUnit,
-  val merchantId: String,
+  @Serializable(with = UUIDSerializer::class)
+  val merchantId: UUID,
   @Serializable(with = BigDecimalSerializer::class)
   val purchasePrice: BigDecimal,
   @Serializable(with = BigDecimalSerializer::class)

@@ -1,0 +1,41 @@
+package com.grappim.utils
+
+import java.math.BigDecimal
+import java.math.RoundingMode
+
+@Throws(NumberFormatException::class)
+fun String?.asBigDecimal(scale: Int = 2): BigDecimal =
+  when {
+    this.isNullOrBlank() -> {
+      BigDecimal("0").setScale(scale, RoundingMode.HALF_EVEN)
+    }
+    this == "." -> {
+      BigDecimal("0.0").setScale(scale, RoundingMode.HALF_EVEN)
+    }
+    this == "-" -> {
+      BigDecimal("0.0").setScale(scale, RoundingMode.HALF_EVEN)
+    }
+    else -> {
+      BigDecimal(this).setScale(scale, RoundingMode.HALF_EVEN)
+    }
+  }
+
+fun String?.asBigDecimalOrNull(scale: Int = 3): BigDecimal? =
+  try {
+    this?.asBigDecimal(scale)
+  } catch (e: Exception) {
+    null
+  }
+
+fun bigDecimalZero(scale: Int = 3): BigDecimal = "0".asBigDecimal(scale)
+
+fun bigDecimalOne(scale: Int = 3): BigDecimal = "1".asBigDecimal(scale)
+
+fun BigDecimal.isNotEqualsZero(): Boolean = this.compareTo(bigDecimalZero()) != 0
+
+fun BigDecimal.isLessThan(value: BigDecimal): Boolean =
+  this.compareTo(value) == -1
+
+fun BigDecimal.isLessThanOrEquals(value: BigDecimal): Boolean =
+  this.compareTo(value) == -1 ||
+      this.compareTo(value) == 0

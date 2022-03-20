@@ -1,5 +1,6 @@
 package com.grappim.db.entities
 
+import com.grappim.db.tables.BasketProductTable
 import com.grappim.db.tables.BasketTable
 import com.grappim.db.tables.ProductsTable
 import org.jetbrains.exposed.dao.LongEntity
@@ -14,4 +15,6 @@ class BasketEntity(
 
   var merchantId by BasketTable.merchantId
   var stockId by BasketTable.stockId
+
+  val basketItems by BasketProductEntity referrersOn BasketProductTable.basket
 }
