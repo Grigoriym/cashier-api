@@ -26,7 +26,7 @@ class JwtControllerImpl(
     return JWT.create()
       .withAudience(spec.audience)
       .withIssuer(spec.issuer)
-      .withClaim(CLAIM_ID, user.id)
+      .withClaim(CLAIM_ID, user.id.toString())
       .withExpiresAt(Date(System.currentTimeMillis() + 600_000))
       .sign(Algorithm.RSA256(publicKey as RSAPublicKey, privateKey as RSAPrivateKey))
   }

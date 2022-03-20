@@ -19,13 +19,6 @@ class StockServiceImpl : StockService {
       StockEntity.all().map(StockEntity::toDomain)
     }
 
-//    fun addStock(stock: StockToCreate) = transaction {
-//        StockEntity.new {
-//            this.stockName = stock.name
-//            this.merchantId = stock.merchantId
-//        }
-//    }
-
   override fun deleteStock(stockId: String) = transaction {
     StockEntity[UUID.fromString(stockId)].delete()
   }

@@ -16,9 +16,9 @@ class OrderServiceImpl : OrderService, BaseService {
     createOrder: CreateOrder
   ): Long = transaction {
     val newOrder = OrderEntity.new {
-      this.merchantId = createOrder.merchantId.toUUID()
-      this.stockId = createOrder.stockId.toUUID()
-      this.cashBoxId = createOrder.cashBoxId.toUUID()
+      this.merchantId = createOrder.merchantId
+      this.stockId = createOrder.stockId
+      this.cashBoxId = createOrder.cashBoxId
 
       this.totalSum = createOrder.totalSum
       this.payType = PayType.getTypeFromString(createOrder.payType)

@@ -1,11 +1,12 @@
 package com.grappim.domain.model.product
 
 import java.math.BigDecimal
+import java.util.UUID
 
 data class CreateProduct(
   val name: String,
-  val stockId: String,
-  val merchantId: String,
+  val stockId: UUID,
+  val merchantId: UUID,
   val unit: String,
   val purchasePrice: BigDecimal,
   val sellingPrice: BigDecimal,

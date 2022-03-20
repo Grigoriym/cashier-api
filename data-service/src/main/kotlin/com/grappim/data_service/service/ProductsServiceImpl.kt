@@ -24,13 +24,13 @@ class ProductsServiceImpl : ProductService, BaseService {
       val query = filter.query
       val op: SqlExpressionBuilder.() -> Op<Boolean> = if (query == null || query.isEmpty()) {
         {
-          (ProductsTable.merchantId eq filter.merchantId.toUUID()) and
-              (ProductsTable.stockId eq filter.stockId.toUUID())
+          (ProductsTable.merchantId eq filter.merchantId) and
+              (ProductsTable.stockId eq filter.stockId)
         }
       } else {
         {
-          (ProductsTable.merchantId eq filter.merchantId.toUUID()) and
-              (ProductsTable.stockId eq filter.stockId.toUUID()) and
+          (ProductsTable.merchantId eq filter.merchantId) and
+              (ProductsTable.stockId eq filter.stockId) and
               (ProductsTable.name eq query)
         }
       }
@@ -56,8 +56,8 @@ class ProductsServiceImpl : ProductService, BaseService {
       this.unit = ProductUnit.getUnitFromString(createProduct.unit)
       this.categoryId = createProduct.categoryId
 
-      this.stockId = createProduct.stockId.toUUID()
-      this.merchantId = createProduct.merchantId.toUUID()
+      this.stockId = createProduct.stockId
+      this.merchantId = createProduct.merchantId
 
       this.amount = createProduct.amount
       this.purchasePrice = createProduct.purchasePrice

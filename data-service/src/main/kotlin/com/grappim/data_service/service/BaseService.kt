@@ -2,28 +2,29 @@ package com.grappim.data_service.service
 
 import com.grappim.utils.MerchantIdIsEmpty
 import com.grappim.utils.StockIdIsEmpty
+import java.util.UUID
 
 interface BaseService {
 
   fun checkMerchantId(
-    merchantId: String
+    merchantId: UUID
   ) {
-    if (merchantId.isEmpty()) {
+    if (merchantId.toString().isEmpty()) {
       throw MerchantIdIsEmpty()
     }
   }
 
   fun checkStockId(
-    stockId: String
+    stockId: UUID
   ) {
-    if (stockId.isEmpty()) {
+    if (stockId.toString().isEmpty()) {
       throw StockIdIsEmpty()
     }
   }
 
   fun checkStockIdAndMerchantId(
-    merchantId: String,
-    stockId: String
+    merchantId: UUID,
+    stockId: UUID
   ) {
     checkMerchantId(merchantId)
     checkStockId(stockId)

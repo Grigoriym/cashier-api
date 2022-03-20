@@ -85,7 +85,6 @@ class AuthServiceImpl : AuthService {
     }.firstOrNull()?.toDomain() ?: throw UserDoesNotExist()
   }
 
-
   override fun deleteUserById(
     id: String
   ): Int = transaction {

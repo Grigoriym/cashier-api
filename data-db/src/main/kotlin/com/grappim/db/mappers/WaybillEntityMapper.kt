@@ -6,8 +6,8 @@ import com.grappim.domain.model.waybill.Waybill
 fun WaybillEntity.toDomain(): Waybill =
   Waybill(
     id = this.id.value,
-    merchantId = this.merchantId.toString(),
-    stockId = this.stockId.toString(),
+    merchantId = this.merchantId,
+    stockId = this.stockId,
     createdOn = this.createdOn,
     updatedOn = this.updatedOn,
     totalCost = this.totalCost,

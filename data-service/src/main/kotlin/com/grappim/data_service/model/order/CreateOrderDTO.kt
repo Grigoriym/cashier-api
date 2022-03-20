@@ -1,18 +1,23 @@
 package com.grappim.data_service.model.order
 
 import com.grappim.utils.serializers.BigDecimalSerializer
+import com.grappim.utils.serializers.UUIDSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
+import java.util.UUID
 
 @Serializable
 data class CreateOrderDTO(
   @SerialName("merchantId")
-  val merchantId: String,
+  @Serializable(UUIDSerializer::class)
+  val merchantId: UUID,
   @SerialName("stockId")
-  val stockId: String,
+  @Serializable(UUIDSerializer::class)
+  val stockId: UUID,
   @SerialName("cashBoxId")
-  val cashBoxId: String,
+  @Serializable(UUIDSerializer::class)
+  val cashBoxId: UUID,
   @SerialName("totalSum")
   @Serializable(BigDecimalSerializer::class)
   val totalSum: BigDecimal,

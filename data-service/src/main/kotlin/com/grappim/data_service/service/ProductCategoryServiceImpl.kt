@@ -24,8 +24,8 @@ class ProductCategoryServiceImpl : ProductCategoryService, BaseService {
       checkStockId(filter.stockId)
 
       val productCategories = ProductCategoryEntity.find(op = {
-        (ProductCategoriesTable.merchantId eq filter.merchantId.toUUID() and
-            (ProductCategoriesTable.stockId eq filter.stockId.toUUID()))
+        (ProductCategoriesTable.merchantId eq filter.merchantId and
+            (ProductCategoriesTable.stockId eq filter.stockId))
       }).orderBy(ProductCategoriesTable.updatedOn to SortOrder.DESC)
         .limit(
           n = filter.limit,
@@ -44,8 +44,8 @@ class ProductCategoryServiceImpl : ProductCategoryService, BaseService {
       checkName(createProductCategory.name)
       val newProductCategoryId = ProductCategoriesTable.insertAndGetId {
         it[name] = createProductCategory.name
-        it[stockId] = createProductCategory.stockId.toUUID()
-        it[merchantId] = createProductCategory.merchantId.toUUID()
+        it[stockId] = createProductCategory.stockId
+        it[merchantId] = createProductCategory.merchantId
         it[createdOn] = LocalDateTime.now()
         it[updatedOn] = LocalDateTime.now()
       }
@@ -70,8 +70,8 @@ class ProductCategoryServiceImpl : ProductCategoryService, BaseService {
     transaction {
       ProductCategoriesTable.update({ ProductCategoriesTable.id eq productCategory.id }) { category ->
         category[name] = productCategory.name
-        category[stockId] = productCategory.stockId.toUUID()
-        category[merchantId] = productCategory.merchantId.toUUID()
+        category[stockId] = productCategory.stockId
+        category[merchantId] = productCategory.merchantId
         category[updatedOn] = LocalDateTime.now()
         category[createdOn] = productCategory.createdOn
       }

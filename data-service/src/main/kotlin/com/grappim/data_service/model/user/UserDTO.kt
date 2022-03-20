@@ -1,55 +1,42 @@
 package com.grappim.data_service.model.user
 
+import com.grappim.utils.serializers.UUIDSerializer
 import kotlinx.serialization.Serializable
-
-@Serializable
-data class UserDTO(
-    val phone: String,
-    val email: String,
-    val password: String,
-    val id: String
-)
+import java.util.UUID
 
 @Serializable
 data class RegisterUserDTO(
-    val phone: String,
-    val email: String,
-    val password: String
+  val phone: String,
+  val email: String,
+  val password: String
 )
 
 @Serializable
 data class RegisterUserResponseDTO(
-    val phone: String,
-    val email: String
+  val phone: String,
+  val email: String
 )
 
 @Serializable
 data class LoginUserDTO(
-    val mobile: String,
-    val password: String
+  val mobile: String,
+  val password: String
 )
 
 @Serializable
 data class LoginUserResponseDTO(
-    val token: String,
-    val merchantId: String,
-    val merchantName: String
+  val token: String,
+  @Serializable(UUIDSerializer::class)
+  val merchantId: UUID,
+  val merchantName: String
 )
 
 @Serializable
 data class UpdateUserDTO(val user: UserDTO) {
-    @Serializable
-    data class UserDTO(
-        val phone: String,
-        val email: String,
-        val password: String
-    )
-}
-
-@Serializable
-data class DeleteUserDTO(val user: UserDTO) {
-    @Serializable
-    data class UserDTO(
-        val id: String
-    )
+  @Serializable
+  data class UserDTO(
+    val phone: String,
+    val email: String,
+    val password: String
+  )
 }

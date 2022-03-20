@@ -7,8 +7,8 @@ fun ProductCategoryEntity.toDomain(): ProductCategory =
   ProductCategory(
     id = this.id.value,
     name = this.name,
-    merchantId = this.merchantId.toString(),
-    stockId = this.stockId.toString(),
+    merchantId = this.merchantId,
+    stockId = this.stockId,
     updatedOn = this.updatedOn,
     createdOn = this.createdOn
   )

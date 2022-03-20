@@ -2,8 +2,8 @@ package com.grappim
 
 import com.grappim.config.configureAuth
 import com.grappim.config.cors
-import com.grappim.config.statusPages
 import com.grappim.config.initDB
+import com.grappim.config.statusPages
 import com.grappim.di.initDI
 import com.grappim.routes.registerApiRoutes
 import io.ktor.application.*

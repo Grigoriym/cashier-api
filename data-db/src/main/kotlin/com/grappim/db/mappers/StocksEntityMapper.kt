@@ -5,6 +5,6 @@ import com.grappim.domain.model.stock.Stock
 
 fun StockEntity.toDomain(): Stock = Stock(
   id = id.value.toString(),
-  merchantId = merchantId.toString(),
+  merchantId = merchantId,
   name = stockName
 )
