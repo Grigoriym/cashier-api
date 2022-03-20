@@ -12,5 +12,7 @@ data class BaseFilterDTO(
   @SerialName("merchantId")
   val merchantId: String,
   @SerialName("stockId")
-  val stockId: String
+  val stockId: String,
+  @SerialName("query")
+  val query: String? = null
 )

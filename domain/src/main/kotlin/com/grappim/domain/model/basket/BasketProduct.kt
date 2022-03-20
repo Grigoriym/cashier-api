@@ -1,21 +1,18 @@
-package com.grappim.domain.model.product
+package com.grappim.domain.model.basket
 
 import com.grappim.domain.model.general.ProductUnit
 import java.math.BigDecimal
-import java.time.LocalDateTime
 import java.util.UUID
 
-data class Product(
+data class BasketProduct(
   val id: Long,
   val barcode: String,
   val name: String,
+  val productId: Long,
   val stockId: UUID,
+  val merchantId: UUID,
   val amount: BigDecimal,
   val unit: ProductUnit,
-  val merchantId: UUID,
-  val purchasePrice: BigDecimal,
   val sellingPrice: BigDecimal,
-  val createdOn: LocalDateTime,
-  val updatedOn: LocalDateTime,
-  val categoryId: Long
+  val basketId: Long
 )

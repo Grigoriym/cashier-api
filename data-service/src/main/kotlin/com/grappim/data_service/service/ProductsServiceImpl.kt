@@ -12,11 +12,8 @@ import com.grappim.utils.DuplicateProductBarcodeException
 import com.grappim.utils.DuplicateProductNameException
 import com.grappim.utils.ProductDoesNotExist
 import com.grappim.utils.toUUID
-import org.jetbrains.exposed.sql.SortOrder
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 
 class ProductsServiceImpl : ProductService, BaseService {
@@ -24,11 +21,21 @@ class ProductsServiceImpl : ProductService, BaseService {
   override fun filterProducts(filter: BaseFilter): List<Product> =
     transaction {
       checkStockIdAndMerchantId(filter.merchantId, filter.stockId)
+      val query = filter.query
+      val op: SqlExpressionBuilder.() -> Op<Boolean> = if (query == null || query.isEmpty()) {
+        {
+          (ProductsTable.merchantId eq filter.merchantId.toUUID()) and
+              (ProductsTable.stockId eq filter.stockId.toUUID())
+        }
+      } else {
+        {
+          (ProductsTable.merchantId eq filter.merchantId.toUUID()) and
+              (ProductsTable.stockId eq filter.stockId.toUUID()) and
+              (ProductsTable.name eq query)
+        }
+      }
 
-      val products = ProductEntity.find(op = {
-        (ProductsTable.merchantId eq filter.merchantId.toUUID()) and
-            (ProductsTable.stockId eq filter.stockId.toUUID())
-      }).orderBy(ProductsTable.updatedOn to SortOrder.DESC)
+      val products = ProductEntity.find(op = op).orderBy(ProductsTable.updatedOn to SortOrder.DESC)
         .limit(
           n = filter.limit,
           offset = filter.offset
@@ -91,8 +98,8 @@ class ProductsServiceImpl : ProductService, BaseService {
       product[unit] = updateProduct.unit
       product[categoryId] = updateProduct.categoryId
 
-      product[stockId] = updateProduct.stockId.toUUID()
-      product[merchantId] = updateProduct.merchantId.toUUID()
+      product[stockId] = updateProduct.stockId
+      product[merchantId] = updateProduct.merchantId
 
       product[amount] = updateProduct.amount
       product[purchasePrice] = updateProduct.purchasePrice
