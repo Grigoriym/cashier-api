@@ -23,6 +23,7 @@ private fun Routing.apiRoute() {
         waybillProductRouting()
         orderRouting()
         basketRouting()
+        featureToggleRouting()
     }
 }
 

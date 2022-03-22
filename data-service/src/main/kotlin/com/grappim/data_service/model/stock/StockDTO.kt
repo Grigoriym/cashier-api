@@ -6,7 +6,8 @@ import java.util.*
 
 @Serializable
 data class StockDTO(
-  val id: String,
+  @Serializable(UUIDSerializer::class)
+  val id: UUID,
   @Serializable(UUIDSerializer::class)
   val merchantId: UUID,
   val name: String

@@ -6,9 +6,11 @@ import com.grappim.db.tables.CashBoxesTable
 import com.grappim.domain.model.cashbox.AddCashBox
 import com.grappim.domain.model.cashbox.CashBox
 import com.grappim.domain.model.cashbox.GetCashBoxesList
+import com.grappim.domain.model.stock.Stock
 import com.grappim.domain.service.CashBoxService
-import com.grappim.utils.toUUID
 import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -40,4 +42,12 @@ class CashBoxServiceImpl : CashBoxService {
       }
       return@transaction newCashBox.id.value.toString()
     }
+
+  override fun createCashBox(merchantId: UUID, stock: Stock) = transaction {
+    CashBoxesTable.insertAndGetId {
+      it[name] = "${stock.name} cashBox"
+      it[this.merchantId] = merchantId
+      it[stockId] = stock.id
+    }.value
+  }
 }

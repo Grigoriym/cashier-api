@@ -22,7 +22,6 @@ fun Route.productRouting() {
   val productService by closestDI().instance<ProductService>()
 
   route("/product") {
-
     authenticate {
       post {
         val request = call.receive<CreateProductRequestDTO>()

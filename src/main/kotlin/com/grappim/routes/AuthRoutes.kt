@@ -20,7 +20,6 @@ fun Route.authRouting() {
   val jwtController by closestDI().instance<JwtController>()
 
   route("/merch") {
-
     post {
       val registerUserDao = call.receive<RegisterUserDTO>()
       authService.register(registerUserDao.toDomain())
