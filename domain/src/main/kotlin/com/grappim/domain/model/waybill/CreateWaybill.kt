@@ -1,6 +1,8 @@
 package com.grappim.domain.model.waybill
 
+import java.util.UUID
+
 data class CreateWaybill(
-  val merchantId: String,
-  val stockId: String
+  val merchantId: UUID,
+  val stockId: UUID
 )

@@ -52,8 +52,10 @@ data class CreateProductResponseDTO(
 @Serializable
 data class CreateProductDTO(
   val name: String,
-  val stockId: String,
-  val merchantId: String,
+  @Serializable(UUIDSerializer::class)
+  val stockId: UUID,
+  @Serializable(UUIDSerializer::class)
+  val merchantId: UUID,
   val unit: String,
   @Serializable(with = BigDecimalSerializer::class)
   val purchasePrice: BigDecimal,

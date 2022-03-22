@@ -31,7 +31,8 @@ object DBConfig {
       OrderTable,
       OrderItemTable,
       BasketTable,
-      BasketProductTable
+      BasketProductTable,
+      FeatureToggleTable
     )
   }
 }

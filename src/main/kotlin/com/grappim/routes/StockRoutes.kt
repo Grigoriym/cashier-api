@@ -1,6 +1,5 @@
 package com.grappim.routes
 
-import com.grappim.authentication.jwt.getMerchantId
 import com.grappim.data_service.model.stock.StockDTO
 import com.grappim.data_service.model.stock.StocksResponseDTO
 import com.grappim.domain.service.StockService
@@ -38,7 +37,6 @@ fun Route.stockRouting() {
           text = "Missing or malformed merchantId",
           status = HttpStatusCode.BadRequest
         )
-        val userId = getMerchantId()
         val stocks = stockService.getStocksByMerchantId(merchantId)
         val response = StocksResponseDTO(stocks.toDTO())
         if (stocks.isNotEmpty()) {

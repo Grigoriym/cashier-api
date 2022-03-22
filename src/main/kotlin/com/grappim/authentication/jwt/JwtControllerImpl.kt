@@ -17,6 +17,8 @@ class JwtControllerImpl(
 
   companion object {
     const val CLAIM_ID = "id"
+
+    private const val JWT_EXPIRATION_TIME = 24 * 60 * 60 * 1000
   }
 
   private fun generateToken(user: User): String {
@@ -26,8 +28,8 @@ class JwtControllerImpl(
     return JWT.create()
       .withAudience(spec.audience)
       .withIssuer(spec.issuer)
-      .withClaim(CLAIM_ID, user.id)
-      .withExpiresAt(Date(System.currentTimeMillis() + 600_000))
+      .withClaim(CLAIM_ID, user.id.toString())
+      .withExpiresAt(Date(System.currentTimeMillis() + JWT_EXPIRATION_TIME))
       .sign(Algorithm.RSA256(publicKey as RSAPublicKey, privateKey as RSAPrivateKey))
   }
 

@@ -1,10 +1,5 @@
 package com.grappim.data_service.service
 
-import com.grappim.utils.RegisterUserIncorrectFieldsException
-import com.grappim.utils.UserDoesNotExist
-import com.grappim.utils.UserExists
-import com.grappim.db.entities.CashBoxEntity
-import com.grappim.db.entities.StockEntity
 import com.grappim.db.entities.UserEntity
 import com.grappim.db.mappers.toDomain
 import com.grappim.db.tables.UsersTable
@@ -12,14 +7,24 @@ import com.grappim.domain.model.user.LoginUser
 import com.grappim.domain.model.user.RegisterUser
 import com.grappim.domain.model.user.UpdateUser
 import com.grappim.domain.model.user.User
+import com.grappim.domain.service.AuthService
+import com.grappim.domain.service.CashBoxService
+import com.grappim.domain.service.FeatureToggleService
+import com.grappim.domain.service.StockService
+import com.grappim.utils.RegisterUserIncorrectFieldsException
+import com.grappim.utils.UserDoesNotExist
+import com.grappim.utils.UserExists
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.or
 import org.jetbrains.exposed.sql.transactions.transaction
-import com.grappim.domain.service.AuthService
 import java.util.*
 
-class AuthServiceImpl : AuthService {
+class AuthServiceImpl(
+  private val stockService: StockService,
+  private val cashBoxService: CashBoxService,
+  private val featureToggleService: FeatureToggleService
+) : AuthService {
 
   override fun register(registerUser: RegisterUser): User = transaction {
     val userInDatabase = UserEntity.find {
@@ -64,16 +69,15 @@ class AuthServiceImpl : AuthService {
   }
 
   private fun createAdditionalData(newUser: UserEntity) {
-    val stock = StockEntity.new {
-      merchantId = newUser.id.value
-      stockName = "${newUser.username} store"
-    }
-
-    CashBoxEntity.new {
-      name = "${stock.stockName} cashBox"
-      merchantId = newUser.id.value
-      stockId = stock.id.value
-    }
+    val stock = stockService.createStock(newUser.toDomain())
+    cashBoxService.createCashBox(
+      merchantId = newUser.id.value,
+      stock = stock
+    )
+    featureToggleService.createFeatureToggle(
+      merchantId = newUser.id.value,
+      stockId = stock.id
+    )
   }
 
   override fun loginAndGetUser(
@@ -84,7 +88,6 @@ class AuthServiceImpl : AuthService {
           (UsersTable.password eq loginUser.password)
     }.firstOrNull()?.toDomain() ?: throw UserDoesNotExist()
   }
-
 
   override fun deleteUserById(
     id: String

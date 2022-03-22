@@ -5,7 +5,7 @@ import com.grappim.domain.model.cashbox.CashBox
 
 fun CashBoxEntity.toDomain(): CashBox = CashBox(
   name = name,
-  cashBoxId = id.value.toString(),
-  merchantId = merchantId.toString(),
-  stockId = stockId.toString()
+  cashBoxId = id.value,
+  merchantId = merchantId,
+  stockId = stockId
 )

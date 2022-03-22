@@ -5,7 +5,6 @@ import com.grappim.db.entities.BasketProductEntity
 import com.grappim.db.mappers.toDomain
 import com.grappim.db.tables.BasketProductTable
 import com.grappim.db.tables.BasketTable
-import com.grappim.db.utils.extensions.upsert
 import com.grappim.domain.model.basket.AddBasketProduct
 import com.grappim.domain.model.basket.BasketProduct
 import com.grappim.domain.model.basket.SubtractBasketProduct
@@ -14,11 +13,10 @@ import com.grappim.domain.service.BasketService
 import com.grappim.utils.bigDecimalOne
 import com.grappim.utils.bigDecimalZero
 import com.grappim.utils.isLessThanOrEquals
-import com.grappim.utils.toUUID
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.plus
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.util.UUID
+import java.util.*
 
 class BasketServiceImpl : BasketService, BaseService {
 
@@ -45,22 +43,10 @@ class BasketServiceImpl : BasketService, BaseService {
       BasketProductTable.update({
         BasketProductTable.productId eq newProduct.productId
       }
-      ) {product ->
+      ) { product ->
         product[amount] = amount.plus(bigDecimalOne())
       }
     }
-
-//    BasketProductTable.upsert { product ->
-//      product[amount] = newProduct.amount.plus(bigDecimalOne())
-//      product[barcode] = newProduct.barcode
-//      product[name] = newProduct.name
-//      product[productId] = newProduct.productId
-//      product[stockId] = newProduct.stockId
-//      product[merchantId] = newProduct.merchantId
-//      product[unit] = newProduct.unit
-//      product[sellingPrice] = newProduct.sellingPrice
-//      product[basket] = currentBasket.id
-//    }
     val basketProduct = BasketProductEntity.find {
       BasketProductTable.productId eq newProduct.productId
     }.firstOrNull() ?: error("lol")
@@ -119,12 +105,12 @@ class BasketServiceImpl : BasketService, BaseService {
   }
 
   override fun getBasketProducts(
-    merchantId: String,
-    stockId: String
+    merchantId: UUID,
+    stockId: UUID
   ): List<BasketProduct> = transaction {
     val basket = BasketEntity.find {
-      (BasketTable.merchantId eq merchantId.toUUID()) and
-          (BasketTable.stockId eq stockId.toUUID())
+      (BasketTable.merchantId eq merchantId) and
+          (BasketTable.stockId eq stockId)
     }.firstOrNull()
     basket?.basketItems?.map { it.toDomain() } ?: emptyList()
   }
@@ -134,13 +120,13 @@ class BasketServiceImpl : BasketService, BaseService {
   }
 
   override fun searchProducts(
-    merchantId: String,
-    stockId: String,
+    merchantId: UUID,
+    stockId: UUID,
     searchQuery: String
   ): List<BasketProduct> = transaction {
     BasketProductEntity.find {
-      (BasketProductTable.merchantId eq merchantId.toUUID()) and
-          (BasketProductTable.stockId eq stockId.toUUID()) and
+      (BasketProductTable.merchantId eq merchantId) and
+          (BasketProductTable.stockId eq stockId) and
           (BasketProductTable.name like searchQuery)
     }.toList().map { it.toDomain() }
   }

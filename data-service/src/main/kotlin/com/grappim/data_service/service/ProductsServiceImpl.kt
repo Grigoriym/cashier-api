@@ -11,7 +11,6 @@ import com.grappim.domain.service.ProductService
 import com.grappim.utils.DuplicateProductBarcodeException
 import com.grappim.utils.DuplicateProductNameException
 import com.grappim.utils.ProductDoesNotExist
-import com.grappim.utils.toUUID
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
@@ -24,13 +23,13 @@ class ProductsServiceImpl : ProductService, BaseService {
       val query = filter.query
       val op: SqlExpressionBuilder.() -> Op<Boolean> = if (query == null || query.isEmpty()) {
         {
-          (ProductsTable.merchantId eq filter.merchantId.toUUID()) and
-              (ProductsTable.stockId eq filter.stockId.toUUID())
+          (ProductsTable.merchantId eq filter.merchantId) and
+              (ProductsTable.stockId eq filter.stockId)
         }
       } else {
         {
-          (ProductsTable.merchantId eq filter.merchantId.toUUID()) and
-              (ProductsTable.stockId eq filter.stockId.toUUID()) and
+          (ProductsTable.merchantId eq filter.merchantId) and
+              (ProductsTable.stockId eq filter.stockId) and
               (ProductsTable.name eq query)
         }
       }
@@ -56,8 +55,8 @@ class ProductsServiceImpl : ProductService, BaseService {
       this.unit = ProductUnit.getUnitFromString(createProduct.unit)
       this.categoryId = createProduct.categoryId
 
-      this.stockId = createProduct.stockId.toUUID()
-      this.merchantId = createProduct.merchantId.toUUID()
+      this.stockId = createProduct.stockId
+      this.merchantId = createProduct.merchantId
 
       this.amount = createProduct.amount
       this.purchasePrice = createProduct.purchasePrice
@@ -66,7 +65,7 @@ class ProductsServiceImpl : ProductService, BaseService {
       this.createdOn = LocalDateTime.now()
       this.updatedOn = LocalDateTime.now()
     }
-    return@transaction newProduct.toDomain()
+    newProduct.toDomain()
   }
 
   private fun checkForName(name: String) {

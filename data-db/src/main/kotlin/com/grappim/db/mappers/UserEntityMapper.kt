@@ -7,5 +7,5 @@ fun UserEntity.toDomain(): User = User(
   phone = this.phone,
   email = this.username,
   password = this.password,
-  id = this.id.value.toString()
+  id = this.id.value
 )

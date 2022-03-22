@@ -1,15 +1,19 @@
 package com.grappim.data_service.model.product_category
 
 import com.grappim.utils.serializers.LocalDateTimeSerializer
+import com.grappim.utils.serializers.UUIDSerializer
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Serializable
 data class ProductCategoryDTO(
   val id: Long,
   val name: String,
-  val merchantId: String,
-  val stockId: String,
+  @Serializable(UUIDSerializer::class)
+  val merchantId: UUID,
+  @Serializable(UUIDSerializer::class)
+  val stockId: UUID,
   @Serializable(with = LocalDateTimeSerializer::class)
   val updatedOn: LocalDateTime,
   @Serializable(with = LocalDateTimeSerializer::class)
@@ -24,6 +28,8 @@ data class CreateProductCategoryRequestDTO(
 @Serializable
 data class CreateProductCategoryDTO(
   val name: String,
-  val merchantId: String,
-  val stockId: String
+  @Serializable(UUIDSerializer::class)
+  val merchantId: UUID,
+  @Serializable(UUIDSerializer::class)
+  val stockId: UUID
 )

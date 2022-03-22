@@ -4,6 +4,7 @@ import com.grappim.domain.model.basket.AddBasketProduct
 import com.grappim.domain.model.basket.BasketProduct
 import com.grappim.domain.model.basket.SubtractBasketProduct
 import com.grappim.domain.model.product.Product
+import java.util.*
 
 interface BasketService {
 
@@ -20,15 +21,15 @@ interface BasketService {
   )
 
   fun getBasketProducts(
-    merchantId: String,
-    stockId: String
+    merchantId: UUID,
+    stockId: UUID
   ): List<BasketProduct>
 
   fun removeBasket(): Int
 
   fun searchProducts(
-    merchantId: String,
-    stockId: String,
+    merchantId: UUID,
+    stockId: UUID,
     searchQuery: String
   ): List<BasketProduct>
 

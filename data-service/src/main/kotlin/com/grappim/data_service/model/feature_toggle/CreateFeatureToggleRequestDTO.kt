@@ -1,18 +1,13 @@
-package com.grappim.data_service.model.cashbox
+package com.grappim.data_service.model.feature_toggle
 
 import com.grappim.utils.serializers.UUIDSerializer
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.UUID
+import java.util.*
 
 @Serializable
-data class AddCashBoxDTO(
-  @SerialName("name")
-  val name: String,
-  @SerialName("merchantId")
+data class CreateFeatureToggleRequestDTO(
   @Serializable(UUIDSerializer::class)
   val merchantId: UUID,
-  @SerialName("stockId")
   @Serializable(UUIDSerializer::class)
   val stockId: UUID
 )

@@ -18,6 +18,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import java.util.*
 
 class WaybillServiceImpl : WaybillService, BaseService {
 
@@ -29,8 +30,8 @@ class WaybillServiceImpl : WaybillService, BaseService {
       stockId = filter.stockId
     )
     val waybills = WaybillEntity.find(op = {
-      (WaybillTable.merchantId eq filter.merchantId.toUUID()) and
-          (WaybillTable.stockId eq filter.stockId.toUUID())
+      (WaybillTable.merchantId eq filter.merchantId) and
+          (WaybillTable.stockId eq filter.stockId)
     }).orderBy(WaybillTable.updatedOn to SortOrder.DESC)
       .limit(
         n = filter.limit,
@@ -48,12 +49,12 @@ class WaybillServiceImpl : WaybillService, BaseService {
   }
 
   private fun getWaybills(
-    merchantId: String,
-    stockId: String
+    merchantId: UUID,
+    stockId: UUID
   ): List<Waybill> = transaction {
     WaybillEntity.find {
-      (WaybillTable.merchantId eq merchantId.toUUID()) and
-          (WaybillTable.stockId eq stockId.toUUID())
+      (WaybillTable.merchantId eq merchantId) and
+          (WaybillTable.stockId eq stockId)
     }.toList().toDomain()
   }
 
@@ -61,8 +62,8 @@ class WaybillServiceImpl : WaybillService, BaseService {
     createWaybill: CreateWaybill
   ): Waybill = transaction {
     val newWaybill = WaybillEntity.new {
-      this.merchantId = createWaybill.merchantId.toUUID()
-      this.stockId = createWaybill.stockId.toUUID()
+      this.merchantId = createWaybill.merchantId
+      this.stockId = createWaybill.stockId
 
       this.createdOn = LocalDateTime.now()
       this.updatedOn = LocalDateTime.now()
@@ -83,8 +84,8 @@ class WaybillServiceImpl : WaybillService, BaseService {
     newWaybill: Waybill
   ): Waybill = transaction {
     WaybillTable.update({ WaybillTable.id eq newWaybill.id }) { waybill ->
-      waybill[merchantId] = newWaybill.merchantId.toUUID()
-      waybill[stockId] = newWaybill.stockId.toUUID()
+      waybill[merchantId] = newWaybill.merchantId
+      waybill[stockId] = newWaybill.stockId
       waybill[updatedOn] = LocalDateTime.now()
       waybill[createdOn] = newWaybill.createdOn
       waybill[status] = newWaybill.status

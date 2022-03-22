@@ -9,6 +9,7 @@ import com.grappim.data_service.model.products.ProductDTO
 import com.grappim.domain.service.BasketService
 import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain
+import com.grappim.utils.toUUID
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
@@ -27,8 +28,8 @@ fun Route.basketRouting() {
         val merchantId = getMerchantId()
         val stockId = call.parameters["stockId"] ?: return@get call.respond(HttpStatusCode.BadRequest)
         val products = basketService.getBasketProducts(
-          merchantId = merchantId,
-          stockId = stockId
+          merchantId = merchantId.toUUID(),
+          stockId = stockId.toUUID()
         ).map {
           it.toDTO()
         }
@@ -71,7 +72,7 @@ fun Route.basketRouting() {
         val merchantId = getMerchantId()
         val request = call.receive<SearchProductsRequestDTO>()
         val products = basketService.searchProducts(
-          merchantId = merchantId,
+          merchantId = merchantId.toUUID(),
           stockId = request.stockId,
           searchQuery = request.searchQuery
         )

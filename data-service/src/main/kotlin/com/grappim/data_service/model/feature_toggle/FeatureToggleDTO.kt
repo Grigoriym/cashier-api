@@ -1,16 +1,15 @@
-package com.grappim.data_service.model.waybill
+package com.grappim.data_service.model.feature_toggle
 
 import com.grappim.utils.serializers.UUIDSerializer
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.*
 
 @Serializable
-data class CreateWaybillDTO(
-  @SerialName("merchantId")
+data class FeatureToggleDTO(
   @Serializable(UUIDSerializer::class)
   val merchantId: UUID,
-  @SerialName("stockId")
   @Serializable(UUIDSerializer::class)
-  val stockId: UUID
+  val stockId: UUID,
+  val isWaybillEnabled: Boolean,
+  val isSalesEnabled: Boolean
 )
