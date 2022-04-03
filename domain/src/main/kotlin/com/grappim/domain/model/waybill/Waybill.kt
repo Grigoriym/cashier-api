@@ -1,8 +1,9 @@
 package com.grappim.domain.model.waybill
 
+import com.grappim.common_domain.model.WaybillStatus
 import java.math.BigDecimal
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 data class Waybill(
   val id: Long,

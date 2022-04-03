@@ -1,16 +1,15 @@
 package com.grappim.data_service.service
 
+import com.grappim.common_domain.model.WaybillStatus
 import com.grappim.db.entities.WaybillEntity
 import com.grappim.db.mappers.toDomain
 import com.grappim.db.tables.WaybillTable
 import com.grappim.domain.model.base.BaseFilter
 import com.grappim.domain.model.waybill.CreateWaybill
 import com.grappim.domain.model.waybill.Waybill
-import com.grappim.domain.model.waybill.WaybillStatus
 import com.grappim.domain.service.WaybillService
 import com.grappim.utils.WaybillDoesNotExist
 import com.grappim.utils.padWithZeroes
-import com.grappim.utils.toUUID
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere

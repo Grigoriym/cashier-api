@@ -1,6 +1,6 @@
 package com.grappim.mappers
 
-import com.grappim.data_service.model.base.BaseFilterDTO
+import com.grappim.common_data.model.base.BaseFilterDTO
 import com.grappim.domain.model.base.BaseFilter
 
 fun BaseFilterDTO.toDomain(): BaseFilter =

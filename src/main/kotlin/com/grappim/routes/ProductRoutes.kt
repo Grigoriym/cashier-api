@@ -1,10 +1,10 @@
 package com.grappim.routes
 
-import com.grappim.data_service.model.base.BaseFilterDTO
-import com.grappim.data_service.model.products.CreateProductRequestDTO
-import com.grappim.data_service.model.products.CreateProductResponseDTO
-import com.grappim.data_service.model.products.FilterProductsResponseDTO
-import com.grappim.data_service.model.products.UpdateProductDTO
+import com.grappim.common_data.model.base.BaseFilterDTO
+import com.grappim.common_data.model.products.CreateProductRequestDTO
+import com.grappim.common_data.model.products.CreateProductResponseDTO
+import com.grappim.common_data.model.products.FilterProductsResponseDTO
+import com.grappim.common_data.model.products.UpdateProductDTO
 import com.grappim.domain.service.ProductService
 import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain

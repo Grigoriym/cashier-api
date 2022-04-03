@@ -2,7 +2,7 @@ package com.grappim.routes
 
 import com.grappim.authentication.jwt.JwtController
 import com.grappim.authentication.jwt.getMerchantId
-import com.grappim.data_service.model.user.*
+import com.grappim.common_data.model.user.*
 import com.grappim.domain.service.AuthService
 import com.grappim.mappers.toDomain
 import io.ktor.application.*

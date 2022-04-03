@@ -1,8 +1,8 @@
 package com.grappim.mappers
 
-import com.grappim.data_service.model.product_category.CreateProductCategoryDTO
-import com.grappim.data_service.model.product_category.FilterProductCategoriesRequestDTO
-import com.grappim.data_service.model.product_category.ProductCategoryDTO
+import com.grappim.common_data.model.product_category.CreateProductCategoryDTO
+import com.grappim.common_data.model.product_category.FilterProductCategoriesRequestDTO
+import com.grappim.common_data.model.product_category.ProductCategoryDTO
 import com.grappim.domain.model.product_category.CreateProductCategory
 import com.grappim.domain.model.product_category.FilterProductCategoriesRequest
 import com.grappim.domain.model.product_category.ProductCategory

@@ -1,6 +1,6 @@
 package com.grappim.routes
 
-import com.grappim.data_service.model.product_category.*
+import com.grappim.common_data.model.product_category.*
 import com.grappim.domain.service.ProductCategoryService
 import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain

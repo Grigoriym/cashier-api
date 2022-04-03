@@ -1,6 +1,6 @@
 package com.grappim.domain.model.basket
 
-import com.grappim.domain.model.general.ProductUnit
+import com.grappim.common_domain.model.ProductUnit
 import java.math.BigDecimal
 import java.util.*
 

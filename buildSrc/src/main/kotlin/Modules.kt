@@ -4,4 +4,7 @@ object Modules {
   const val domain = ":domain"
   const val routes = ":routes"
   const val utils = ":utils"
+
+  const val cashierCommonDomain = ":cashier-common-domain"
+  const val cashierCommonData = ":cashier-common-data"
 }

@@ -1,6 +1,6 @@
 package com.grappim.mappers
 
-import com.grappim.data_service.model.order.CreateOrderDTO
+import com.grappim.common_data.model.order.CreateOrderDTO
 import com.grappim.data_service.model.order.OrderItemDTO
 import com.grappim.domain.model.order.CreateOrder
 import com.grappim.domain.model.order.OrderItem

@@ -15,10 +15,6 @@ application {
   mainClass.set("com.grappim.ApplicationKt")
 }
 
-repositories {
-  mavenCentral()
-}
-
 tasks.withType<KotlinCompile> {
   kotlinOptions {
     jvmTarget = "13"
@@ -30,6 +26,14 @@ fun isNonStable(version: String): Boolean {
   val regex = "^[0-9,.v-]+(-r)?$".toRegex()
   val isStable = stableKeyword || regex.matches(version)
   return isStable.not()
+}
+
+subprojects {
+  tasks.withType<KotlinCompile> {
+    kotlinOptions {
+      jvmTarget = "13"
+    }
+  }
 }
 
 tasks.withType<DependencyUpdatesTask> {
@@ -44,11 +48,13 @@ tasks.withType<DependencyUpdatesTask> {
 }
 
 dependencies {
-
   implementation(project(Modules.dataDb))
   implementation(project(Modules.dataService))
   implementation(project(Modules.domain))
   implementation(project(Modules.utils))
+
+  implementation(project(Modules.cashierCommonDomain))
+  implementation(project(Modules.cashierCommonData))
 
   implementation(Deps.kotlinStdlib())
   implementation(Deps.kotlinSerialization())

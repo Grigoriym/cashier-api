@@ -1,7 +1,9 @@
 package com.grappim.mappers
 
-import com.grappim.data_service.model.waybill.CreateWaybillDTO
-import com.grappim.data_service.model.waybill.WaybillDTO
+import com.grappim.common_data.WaybillStatusDTO
+import com.grappim.common_data.model.waybill.CreateWaybillDTO
+import com.grappim.common_data.model.waybill.WaybillDTO
+import com.grappim.common_domain.model.WaybillStatus
 import com.grappim.domain.model.waybill.CreateWaybill
 import com.grappim.domain.model.waybill.Waybill
 
@@ -13,7 +15,7 @@ fun WaybillDTO.toDomain(): Waybill =
     createdOn = this.createdOn,
     updatedOn = this.updatedOn,
     totalCost = this.totalCost,
-    status = this.status,
+    status = this.status.toDomain(),
     comment = this.comment,
     reservedTime = this.reservedTime,
     number = this.number
@@ -32,7 +34,7 @@ fun Waybill.toDTO(): WaybillDTO =
     createdOn = this.createdOn,
     updatedOn = this.updatedOn,
     totalCost = this.totalCost,
-    status = this.status,
+    status = this.status.toDTO(),
     comment = this.comment,
     reservedTime = this.reservedTime,
     number = this.number
@@ -43,3 +45,15 @@ fun CreateWaybillDTO.toDomain(): CreateWaybill =
     merchantId = this.merchantId,
     stockId = this.stockId
   )
+
+fun WaybillStatusDTO.toDomain(): WaybillStatus =
+  when (this) {
+    WaybillStatusDTO.ACTIVE -> WaybillStatus.ACTIVE
+    WaybillStatusDTO.DRAFT -> WaybillStatus.DRAFT
+  }
+
+fun WaybillStatus.toDTO(): WaybillStatusDTO =
+  when (this) {
+    WaybillStatus.DRAFT -> WaybillStatusDTO.DRAFT
+    WaybillStatus.ACTIVE -> WaybillStatusDTO.ACTIVE
+  }

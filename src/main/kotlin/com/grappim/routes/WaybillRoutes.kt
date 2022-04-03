@@ -1,11 +1,11 @@
 package com.grappim.routes
 
-import com.grappim.data_service.model.base.BaseFilterDTO
-import com.grappim.data_service.model.waybill.CreateWaybillRequestDTO
-import com.grappim.data_service.model.waybill.CreateWaybillResponseDTO
-import com.grappim.data_service.model.waybill.FilterWaybillsResponseDTO
-import com.grappim.data_service.model.waybill.UpdateWaybillDTO
-import com.grappim.data_service.model.waybill.product.GetWaybillByIdResponseDTO
+import com.grappim.common_data.model.base.BaseFilterDTO
+import com.grappim.common_data.model.waybill.CreateWaybillRequestDTO
+import com.grappim.common_data.model.waybill.CreateWaybillResponseDTO
+import com.grappim.common_data.model.waybill.FilterWaybillsResponseDTO
+import com.grappim.common_data.model.waybill.UpdateWaybillDTO
+import com.grappim.common_data.model.waybill.product.GetWaybillByIdResponseDTO
 import com.grappim.domain.service.WaybillService
 import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain

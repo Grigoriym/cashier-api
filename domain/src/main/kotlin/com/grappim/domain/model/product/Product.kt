@@ -1,9 +1,9 @@
 package com.grappim.domain.model.product
 
-import com.grappim.domain.model.general.ProductUnit
+import com.grappim.common_domain.model.ProductUnit
 import java.math.BigDecimal
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 data class Product(
   val id: Long,

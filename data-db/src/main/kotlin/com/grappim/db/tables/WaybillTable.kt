@@ -1,6 +1,6 @@
 package com.grappim.db.tables
 
-import com.grappim.domain.model.waybill.WaybillStatus
+import com.grappim.common_domain.model.WaybillStatus
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption

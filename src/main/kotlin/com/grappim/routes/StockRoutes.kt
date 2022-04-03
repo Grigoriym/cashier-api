@@ -1,7 +1,7 @@
 package com.grappim.routes
 
-import com.grappim.data_service.model.stock.StockDTO
-import com.grappim.data_service.model.stock.StocksResponseDTO
+import com.grappim.common_data.model.stock.StockDTO
+import com.grappim.common_data.model.stock.StocksResponseDTO
 import com.grappim.domain.service.StockService
 import com.grappim.mappers.toDTO
 import io.ktor.application.*

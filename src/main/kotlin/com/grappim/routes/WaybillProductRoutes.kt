@@ -1,6 +1,6 @@
 package com.grappim.routes
 
-import com.grappim.data_service.model.waybill.product.*
+import com.grappim.common_data.model.waybill.product.*
 import com.grappim.domain.service.WaybillProductService
 import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain
