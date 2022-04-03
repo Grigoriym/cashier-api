@@ -7,6 +7,7 @@ object Versions {
   const val kodein = "7.10.0"
   const val postgreSql = "42.3.1"
   const val kotlinSerialization = "1.3.2"
+  const val bcrypt = "0.9.0"
 
   const val gradleVersions = "0.41.0"
 }

@@ -45,6 +45,10 @@ fun Route.authRouting() {
       )
     }
 
+    post("/login/guest") {
+      authService.loginAsAGuest()
+    }
+
     authenticate {
       get {
         val id = getMerchantId()

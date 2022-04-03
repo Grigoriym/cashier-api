@@ -7,6 +7,10 @@ The REST API backed server for the [CashierApp](https://github.com/Grigoriym/Cas
 - Ktor
 - PostgreSQL
 - Kodein
+- bcrypt
+- kotlin serialization
+- exposed
+- hikari
 
 ### Project components description
 
@@ -25,3 +29,4 @@ The REST API backed server for the [CashierApp](https://github.com/Grigoriym/Cas
 - Swagger
 - Architecture (I do not know what the architectures I can use in ktor projects)
 - Learn kodein
+- Add refresh token

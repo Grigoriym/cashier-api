@@ -2,7 +2,9 @@ package com.grappim.di
 
 import com.grappim.authentication.jwt.JwtSpec
 import com.grappim.config.JwtConfig
+import com.grappim.domain.password.PasswordManager
 import com.grappim.utils.AppConfigs
+import com.grappim.utils.password.PasswordManagerImpl
 import io.ktor.application.*
 import io.ktor.config.*
 import org.kodein.di.*
@@ -15,6 +17,8 @@ fun DI.MainBuilder.applicationModule(application: Application) {
     bindApplicationConfig(application)
     bindJwtConfig()
     bindJwtSpec()
+
+    bind<PasswordManager>() with singleton { PasswordManagerImpl() }
 }
 
 private fun DI.MainBuilder.bindApplicationConfig(application: Application) {

@@ -17,7 +17,8 @@ object DBConfig {
 //      OrderTable,
 //      OrderItemTable,
 //      BasketTable,
-//      BasketProductTable
+//      BasketProductTable,
+//      FeatureToggleTable
 //    )//todo wait for versions migrations
 
     SchemaUtils.create(

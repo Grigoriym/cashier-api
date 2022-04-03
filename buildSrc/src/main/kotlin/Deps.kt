@@ -4,6 +4,7 @@ object Deps {
   const val hikari = "com.zaxxer:HikariCP:${Versions.hikari}"
   const val postgreSql = "org.postgresql:postgresql:${Versions.postgreSql}"
   const val kodein = "org.kodein.di:kodein-di-framework-ktor-server-jvm:${Versions.kodein}"
+  const val bcrypt = "at.favre.lib:bcrypt:${Versions.bcrypt}"
 
   private fun ktor(module: String = "", version: String = Versions.ktor) =
     "io.ktor:ktor$module:$version"

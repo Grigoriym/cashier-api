@@ -5,6 +5,8 @@ plugins {
   kotlin("plugin.serialization")
 }
 
+val cashierSecretKey = extra["cashier_secret_key"]
+
 repositories {
   gradlePluginPortal()
   mavenCentral()
@@ -19,4 +21,8 @@ tasks.withType<KotlinCompile> {
 dependencies {
   implementation(Deps.kotlinStdlib())
   implementation(Deps.kotlinSerialization())
+
+  implementation(project(Modules.domain))
+
+  implementation(Deps.bcrypt)
 }

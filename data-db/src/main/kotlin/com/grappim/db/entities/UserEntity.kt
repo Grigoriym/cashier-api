@@ -15,5 +15,7 @@ class UserEntity(
   var phone by UsersTable.phone
   var username by UsersTable.username
   var password by UsersTable.password
+  var createdOn by UsersTable.createdOn
+  var updatedOn by UsersTable.updatedOn
 
 }
