@@ -14,7 +14,8 @@ fun DI.MainBuilder.serviceModule() {
     AuthServiceImpl(
       stockService = instance(),
       cashBoxService = instance(),
-      featureToggleService = instance()
+      featureToggleService = instance(),
+      passwordManager = instance()
     )
   }
   bind<ProductService>() with singleton { ProductsServiceImpl() }

@@ -7,6 +7,7 @@ import com.grappim.domain.model.user.LoginUser
 import com.grappim.domain.model.user.RegisterUser
 import com.grappim.domain.model.user.UpdateUser
 import com.grappim.domain.model.user.User
+import com.grappim.domain.password.PasswordManager
 import com.grappim.domain.service.AuthService
 import com.grappim.domain.service.CashBoxService
 import com.grappim.domain.service.FeatureToggleService
@@ -14,17 +15,24 @@ import com.grappim.domain.service.StockService
 import com.grappim.utils.RegisterUserIncorrectFieldsException
 import com.grappim.utils.UserDoesNotExist
 import com.grappim.utils.UserExists
-import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.or
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.time.LocalDateTime
 import java.util.*
 
 class AuthServiceImpl(
   private val stockService: StockService,
   private val cashBoxService: CashBoxService,
-  private val featureToggleService: FeatureToggleService
+  private val featureToggleService: FeatureToggleService,
+  private val passwordManager: PasswordManager
 ) : AuthService {
+
+  override fun loginAsAGuest() = transaction {
+    val newGuestUser = UserEntity.new {
+
+    }
+  }
 
   override fun register(registerUser: RegisterUser): User = transaction {
     val userInDatabase = UserEntity.find {
@@ -39,7 +47,9 @@ class AuthServiceImpl(
     val newUser = UserEntity.new {
       username = registerUser.email
       phone = registerUser.phone
-      password = registerUser.password
+      password = passwordManager.hashPassword(registerUser.password)
+      createdOn = LocalDateTime.now()
+      updatedOn = LocalDateTime.now()
     }
 
     createAdditionalData(newUser)
@@ -83,10 +93,14 @@ class AuthServiceImpl(
   override fun loginAndGetUser(
     loginUser: LoginUser
   ): User = transaction {
-    UserEntity.find {
-      (UsersTable.phone eq loginUser.mobile) and
-          (UsersTable.password eq loginUser.password)
-    }.firstOrNull()?.toDomain() ?: throw UserDoesNotExist()
+    val foundUser = UserEntity.find {
+      (UsersTable.phone eq loginUser.mobile)
+    }.firstOrNull() ?: throw UserDoesNotExist()
+    if (passwordManager.validatePassword(loginUser.password, foundUser.password)) {
+      foundUser.toDomain()
+    } else {
+      throw UserDoesNotExist()
+    }
   }
 
   override fun deleteUserById(

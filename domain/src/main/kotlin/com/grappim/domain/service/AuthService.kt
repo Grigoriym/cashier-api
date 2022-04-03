@@ -21,4 +21,6 @@ interface AuthService {
     userId: String,
     updateUser: UpdateUser
   ): User
+
+  fun loginAsAGuest()
 }

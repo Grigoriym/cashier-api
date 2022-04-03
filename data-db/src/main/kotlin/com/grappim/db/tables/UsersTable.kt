@@ -2,6 +2,7 @@ package com.grappim.db.tables
 
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.javatime.datetime
 
 object UsersTable : UUIDTable(
   name = "users_table"
@@ -20,5 +21,13 @@ object UsersTable : UUIDTable(
   val password = varchar(
     name = "password",
     length = 255
+  )
+
+  val createdOn = datetime(
+    name = "createdOn"
+  )
+
+  val updatedOn = datetime(
+    name = "updatedOn"
   )
 }
