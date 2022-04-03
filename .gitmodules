@@ -1,0 +1,6 @@
+[submodule "cashier-common-data"]
+	path = cashier-common-data
+	url = https://github.com/Grigoriym/cashier-common-data.git
+[submodule "cashier-common-domain"]
+	path = cashier-common-domain
+	url = https://github.com/Grigoriym/cashier-common-domain.git

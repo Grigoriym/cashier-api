@@ -1,6 +1,6 @@
 package com.grappim.mappers
 
-import com.grappim.data_service.model.waybill.product.*
+import com.grappim.common_data.model.waybill.product.*
 import com.grappim.domain.model.waybill.*
 
 fun CreateWaybillProductDTO.toDomain(): CreateWaybillProduct =

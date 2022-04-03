@@ -1,8 +1,8 @@
 package com.grappim.mappers
 
-import com.grappim.data_service.model.cashbox.AddCashBoxDTO
-import com.grappim.data_service.model.cashbox.CashBoxDTO
-import com.grappim.data_service.model.cashbox.GetCashBoxesListDTO
+import com.grappim.common_data.model.cashbox.AddCashBoxDTO
+import com.grappim.common_data.model.cashbox.CashBoxDTO
+import com.grappim.common_data.model.cashbox.GetCashBoxesListDTO
 import com.grappim.domain.model.cashbox.AddCashBox
 import com.grappim.domain.model.cashbox.CashBox
 import com.grappim.domain.model.cashbox.GetCashBoxesList

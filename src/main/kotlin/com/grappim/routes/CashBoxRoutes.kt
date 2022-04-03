@@ -1,9 +1,9 @@
 package com.grappim.routes
 
-import com.grappim.data_service.model.cashbox.CashBoxDTO
-import com.grappim.data_service.model.cashbox.CashBoxResponseDTO
-import com.grappim.data_service.model.cashbox.AddCashBoxDTO
-import com.grappim.data_service.model.cashbox.GetCashBoxesListDTO
+import com.grappim.common_data.model.cashbox.AddCashBoxDTO
+import com.grappim.common_data.model.cashbox.CashBoxDTO
+import com.grappim.common_data.model.cashbox.CashBoxResponseDTO
+import com.grappim.common_data.model.cashbox.GetCashBoxesListDTO
 import com.grappim.domain.service.CashBoxService
 import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain

@@ -1,7 +1,7 @@
 package com.grappim.mappers
 
-import com.grappim.data_service.model.products.CreateProductDTO
-import com.grappim.data_service.model.products.ProductDTO
+import com.grappim.common_data.model.products.CreateProductDTO
+import com.grappim.common_data.model.products.ProductDTO
 import com.grappim.domain.model.product.CreateProduct
 import com.grappim.domain.model.product.Product
 
@@ -21,7 +21,7 @@ fun Product.toDTO(): ProductDTO = ProductDTO(
   name = this.name,
   stockId = this.stockId,
   merchantId = this.merchantId,
-  unit = this.unit,
+  unit = this.unit.toDTO(),
   purchasePrice = this.purchasePrice,
   sellingPrice = this.sellingPrice,
   amount = this.amount,
@@ -42,7 +42,7 @@ fun ProductDTO.toDomain(): Product =
     name = this.name,
     stockId = this.stockId,
     merchantId = this.merchantId,
-    unit = this.unit,
+    unit = this.unit.toDomain(),
     purchasePrice = this.purchasePrice,
     sellingPrice = this.sellingPrice,
     amount = this.amount,

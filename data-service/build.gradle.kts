@@ -1,39 +1,25 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-}
-
-repositories {
-    gradlePluginPortal()
-    mavenCentral()
-  maven {
-    url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
-    name = "ktor-eap"
-  }
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "13"
-    }
+  kotlin("jvm")
+  kotlin("plugin.serialization")
 }
 
 dependencies {
-    implementation(project(Modules.domain))
-    implementation(project(Modules.utils))
-    implementation(project(Modules.dataDb))
+  implementation(project(Modules.domain))
+  implementation(project(Modules.utils))
+  implementation(project(Modules.dataDb))
 
-    implementation(Deps.kotlinStdlib())
-    implementation(Deps.kotlinSerialization())
+  implementation(project(Modules.cashierCommonDomain))
+  implementation(project(Modules.cashierCommonData))
 
-    implementation(Deps.exposedCore())
-    implementation(Deps.exposedDao())
+  implementation(Deps.kotlinStdlib())
+  implementation(Deps.kotlinSerialization())
 
-    implementation(Deps.ktorServerCore())
-    implementation(Deps.ktorServerNetty())
-    implementation(Deps.ktorSerialization())
+  implementation(Deps.exposedCore())
+  implementation(Deps.exposedDao())
 
-    implementation(Deps.kodein)
+  implementation(Deps.ktorServerCore())
+  implementation(Deps.ktorServerNetty())
+  implementation(Deps.ktorSerialization())
+
+  implementation(Deps.kodein)
 }

@@ -1,7 +1,7 @@
 package com.grappim.routes
 
 import com.grappim.authentication.jwt.getMerchantId
-import com.grappim.data_service.model.feature_toggle.CreateFeatureToggleRequestDTO
+import com.grappim.common_data.model.feature_toggle.CreateFeatureToggleRequestDTO
 import com.grappim.domain.service.FeatureToggleService
 import com.grappim.mappers.toDTO
 import com.grappim.utils.toUUID

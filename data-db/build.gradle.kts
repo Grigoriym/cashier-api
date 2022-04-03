@@ -1,23 +1,11 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
   kotlin("jvm")
-}
-
-repositories {
-  gradlePluginPortal()
-  mavenCentral()
-}
-
-tasks.withType<KotlinCompile> {
-  kotlinOptions {
-    jvmTarget = "13"
-  }
 }
 
 dependencies {
   implementation(project(Modules.domain))
   implementation(project(Modules.utils))
+  implementation(project(Modules.cashierCommonDomain))
 
   implementation(Deps.kotlinStdlib())
 

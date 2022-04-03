@@ -1,10 +1,10 @@
 package com.grappim.data_service.service
 
+import com.grappim.common_domain.model.ProductUnit
 import com.grappim.db.entities.ProductEntity
 import com.grappim.db.mappers.toDomain
 import com.grappim.db.tables.ProductsTable
 import com.grappim.domain.model.base.BaseFilter
-import com.grappim.domain.model.general.ProductUnit
 import com.grappim.domain.model.product.CreateProduct
 import com.grappim.domain.model.product.Product
 import com.grappim.domain.service.ProductService

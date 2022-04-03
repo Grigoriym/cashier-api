@@ -1,11 +1,11 @@
 package com.grappim.routes
 
 import com.grappim.authentication.jwt.getMerchantId
-import com.grappim.data_service.model.basket.AddBasketProductDTO
-import com.grappim.data_service.model.basket.BasketProductDTO
-import com.grappim.data_service.model.basket.SearchProductsRequestDTO
-import com.grappim.data_service.model.basket.SubtractBasketProductResponseDTO
-import com.grappim.data_service.model.products.ProductDTO
+import com.grappim.common_data.model.basket.AddBasketProductDTO
+import com.grappim.common_data.model.basket.BasketProductDTO
+import com.grappim.common_data.model.basket.SearchProductsRequestDTO
+import com.grappim.common_data.model.basket.SubtractBasketProductResponseDTO
+import com.grappim.common_data.model.products.ProductDTO
 import com.grappim.domain.service.BasketService
 import com.grappim.mappers.toDTO
 import com.grappim.mappers.toDomain
