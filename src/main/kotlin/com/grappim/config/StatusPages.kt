@@ -1,16 +1,15 @@
 package com.grappim.config
 
 import com.grappim.utils.*
-import io.ktor.application.*
-import io.ktor.features.*
 import io.ktor.http.*
-import io.ktor.response.*
+import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.response.*
 
-fun StatusPages.Configuration.statusPages() {
-  exception<AuthenticationException> {
+fun StatusPagesConfig.statusPages() {
+  exception<AuthenticationException> { call, cause ->
     call.respond(HttpStatusCode.Unauthorized)
   }
-  exception<UserExists> { cause ->
+  exception<UserExists> { call, cause ->
     call.respond(
       status = HttpStatusCode.UnprocessableEntity,
       message = mapOf(
@@ -19,7 +18,7 @@ fun StatusPages.Configuration.statusPages() {
       )
     )
   }
-  exception<UserDoesNotExist> { cause ->
+  exception<UserDoesNotExist> { call, cause ->
     call.respond(
       status = HttpStatusCode.NotFound,
       message = mapOf(
@@ -29,7 +28,7 @@ fun StatusPages.Configuration.statusPages() {
     )
   }
 
-  exception<MerchantIdIsEmpty> { cause ->
+  exception<MerchantIdIsEmpty> { call, cause ->
     call.respond(
       status = HttpStatusCode.Conflict,
       message = mapOf(
@@ -39,7 +38,7 @@ fun StatusPages.Configuration.statusPages() {
     )
   }
 
-  exception<StockIdIsEmpty> { cause ->
+  exception<StockIdIsEmpty> { call, cause ->
     call.respond(
       status = HttpStatusCode.Conflict,
       message = mapOf(
@@ -49,14 +48,14 @@ fun StatusPages.Configuration.statusPages() {
     )
   }
 
-  exception<RegisterUserIncorrectFieldsException.BlankFieldsException> { cause ->
+  exception<RegisterUserIncorrectFieldsException.BlankFieldsException> { call, cause ->
     call.respond(
       status = HttpStatusCode.Conflict,
       message = cause.exceptionMessage
     )
   }
 
-  exception<ProductDoesNotExist> { cause ->
+  exception<ProductDoesNotExist> { call, cause ->
     call.respond(
       status = HttpStatusCode.NotFound,
       message = mapOf(
@@ -66,7 +65,7 @@ fun StatusPages.Configuration.statusPages() {
     )
   }
 
-  exception<ProductCategoryDoesNotExist> { cause ->
+  exception<ProductCategoryDoesNotExist> { call, cause ->
     call.respond(
       status = HttpStatusCode.NotFound,
       message = mapOf(
@@ -76,7 +75,7 @@ fun StatusPages.Configuration.statusPages() {
     )
   }
 
-  exception<ProductNameIsEmptyException> { cause ->
+  exception<ProductNameIsEmptyException> { call, cause ->
     call.respond(
       status = HttpStatusCode.NotFound,
       message = mapOf(
@@ -86,7 +85,7 @@ fun StatusPages.Configuration.statusPages() {
     )
   }
 
-  exception<WaybillDoesNotExist> { cause ->
+  exception<WaybillDoesNotExist> { call, cause ->
     call.respond(
       status = HttpStatusCode.NotFound,
       message = mapOf(
@@ -96,7 +95,7 @@ fun StatusPages.Configuration.statusPages() {
     )
   }
 
-  exception<DuplicateProductNameException> { cause ->
+  exception<DuplicateProductNameException> { call, cause ->
     call.respond(
       status = HttpStatusCode.NotFound,
       message = mapOf(
@@ -106,7 +105,7 @@ fun StatusPages.Configuration.statusPages() {
     )
   }
 
-  exception<DuplicateProductBarcodeException> { cause ->
+  exception<DuplicateProductBarcodeException> { call, cause ->
     call.respond(
       status = HttpStatusCode.NotFound,
       message = mapOf(
