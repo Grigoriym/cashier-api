@@ -64,8 +64,12 @@ dependencies {
   implementation(Deps.ktorSerialization())
   implementation(Deps.ktorAuth())
   implementation(Deps.ktorAuthJwt())
-
   implementation(Deps.exposedDao())
+  implementation(Deps.ktorCors())
+  implementation(Deps.ktoStatusPages())
+  implementation(Deps.ktoDefaultHeaders())
+  implementation(Deps.ktorCallLogging())
+  implementation(Deps.ktorContentNegotiation())
 
   implementation(Deps.logback)
   implementation(Deps.hikari)

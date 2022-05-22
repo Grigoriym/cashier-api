@@ -1,9 +1,9 @@
 package com.grappim.config
 
 import com.auth0.jwk.JwkProvider
-import io.ktor.application.*
-import io.ktor.auth.*
-import io.ktor.auth.jwt.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 

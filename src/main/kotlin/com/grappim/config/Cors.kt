@@ -1,7 +1,7 @@
 package com.grappim.config
 
-import io.ktor.features.*
+import io.ktor.server.plugins.cors.*
 
-fun CORS.Configuration.cors() {
-    anyHost()
+fun CORSConfig.cors() {
+  anyHost()
 }

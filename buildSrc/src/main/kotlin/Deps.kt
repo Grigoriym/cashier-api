@@ -25,12 +25,18 @@ object Deps {
     version = Versions.kotlinSerialization
   )
 
-  fun ktorServerCore() = ktor("-server-core")
-  fun ktorServerNetty() = ktor("-server-netty")
-  fun ktorSerialization() = ktor("-serialization")
-  fun ktorAuth() = ktor("-auth")
-  fun ktorAuthJwt() = ktor("-auth-jwt")
+  fun ktorServerCore() = ktor("-server-core-jvm")
+  fun ktorServerNetty() = ktor("-server-netty-jvm")
+  fun ktorSerialization() = ktor("-serialization-kotlinx-json-jvm")
+  fun ktorAuth() = ktor("-server-auth")
+  fun ktorAuthJwt() = ktor("-server-auth-jwt")
   fun ktorServerTests() = ktor("-server-tests")
+
+  fun ktorCors() = ktor("-server-cors")
+  fun ktoStatusPages() = ktor("-server-status-pages")
+  fun ktoDefaultHeaders() = ktor("-server-default-headers")
+  fun ktorCallLogging() = ktor("-server-call-logging")
+  fun ktorContentNegotiation() = ktor("-server-content-negotiation")
 
   fun exposedCore() = exposed("-core")
   fun exposedDao() = exposed("-dao")

@@ -2,7 +2,7 @@ package com.grappim.di
 
 import com.grappim.data_service.di.serviceModule
 import com.grappim.db.di.databaseModule
-import io.ktor.application.*
+import io.ktor.server.application.*
 import org.kodein.di.ktor.di
 
 fun Application.initDI() {

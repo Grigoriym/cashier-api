@@ -4,11 +4,11 @@ import com.grappim.common_data.model.stock.StockDTO
 import com.grappim.common_data.model.stock.StocksResponseDTO
 import com.grappim.domain.service.StockService
 import com.grappim.mappers.toDTO
-import io.ktor.application.*
-import io.ktor.auth.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.http.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.closestDI
 import java.util.*
