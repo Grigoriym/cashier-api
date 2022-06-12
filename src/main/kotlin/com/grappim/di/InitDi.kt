@@ -6,11 +6,11 @@ import io.ktor.server.application.*
 import org.kodein.di.ktor.di
 
 fun Application.initDI() {
-    di {
-        applicationModule(this@initDI)
-        jwtModule()
-        databaseModule()
-        serviceModule()
-        controllerModule()
-    }
+  di {
+    applicationModule(this@initDI)
+    jwtModule()
+    databaseModule()
+    serviceModule()
+    controllerModule()
+  }
 }
