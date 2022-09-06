@@ -47,6 +47,10 @@ tasks.withType<DependencyUpdatesTask> {
   reportfileName = "report"
 }
 
+tasks {
+  create("stage").dependsOn("installDist")
+}
+
 dependencies {
   implementation(project(Modules.dataDb))
   implementation(project(Modules.dataService))

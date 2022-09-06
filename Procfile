@@ -1,0 +1,1 @@
+web: ./build/install/cashier-api/bin/cashier-api
