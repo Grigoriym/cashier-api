@@ -15,6 +15,7 @@ import com.grappim.domain.service.StockService
 import com.grappim.utils.RegisterUserIncorrectFieldsException
 import com.grappim.utils.UserDoesNotExist
 import com.grappim.utils.UserExists
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.or
 import org.jetbrains.exposed.sql.transactions.transaction

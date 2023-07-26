@@ -10,6 +10,7 @@ import com.grappim.domain.service.WaybillProductService
 import com.grappim.utils.ProductDoesNotExist
 import com.grappim.utils.WaybillDoesNotExist
 import org.jetbrains.exposed.sql.SortOrder
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update

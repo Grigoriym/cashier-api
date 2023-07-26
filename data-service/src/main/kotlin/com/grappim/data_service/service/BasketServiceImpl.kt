@@ -14,6 +14,7 @@ import com.grappim.utils.bigDecimalOne
 import com.grappim.utils.bigDecimalZero
 import com.grappim.utils.isLessThanOrEquals
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.plus
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*

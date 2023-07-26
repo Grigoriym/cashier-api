@@ -9,8 +9,8 @@ import com.grappim.domain.model.product_category.ProductCategory
 import com.grappim.domain.service.ProductCategoryService
 import com.grappim.utils.ProductCategoryDoesNotExist
 import com.grappim.utils.ProductNameIsEmptyException
-import com.grappim.utils.toUUID
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 

@@ -11,6 +11,7 @@ import com.grappim.domain.service.WaybillService
 import com.grappim.utils.WaybillDoesNotExist
 import com.grappim.utils.padWithZeroes
 import org.jetbrains.exposed.sql.SortOrder
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.transaction
