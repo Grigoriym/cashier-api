@@ -6,6 +6,9 @@ plugins {
   kotlin("jvm") version Versions.kotlin
   kotlin("plugin.serialization") version Versions.kotlin
   id(Plugins.gradleVersions) version Versions.gradleVersions
+
+  id("com.github.johnrengelman.shadow") version "8.1.1"
+//  id("java")
 }
 
 group = "com.grappim"

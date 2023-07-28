@@ -1,1 +1,1 @@
-web: ./build/install/cashier-api/bin/cashier-api
+web: java -jar build/libs/cashier-api-0.0.1-all.jar

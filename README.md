@@ -30,3 +30,6 @@ The REST API backed server for the [CashierApp](https://github.com/Grigoriym/Cas
 - Architecture (I do not know what the architectures I can use in ktor projects)
 - Learn kodein
 - Add refresh token
+
+### Moving Porject to Heroku
+- [Deploy KtorApp with PostreSQL to Heroku](https://nameisjayant.medium.com/deploy-ktor-app-with-postgresql-on-heroku-ff35df4b5c55)
